@@ -181,11 +181,17 @@ export default function Home({ lang }: HomeProps) {
       {/* 2. HERO SECTION */}
       <section 
         id="hero" 
-        className="relative text-white pt-28 pb-28 sm:pt-40 sm:pb-40 lg:pt-52 lg:pb-52 overflow-hidden flex items-center justify-start min-h-[85vh] bg-cover bg-center bg-no-repeat"
+        className="relative text-white pt-28 pb-28 sm:pt-40 sm:pb-40 lg:pt-52 lg:pb-52 overflow-hidden flex items-center justify-start min-h-[80vh] bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "linear-gradient(to right, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.45) 100%), url('/assets/images/hero/monterrey-skyline.jpg'), url('/assets/images/monterrey-skyline.jpg'), url('https://images.unsplash.com/photo-1596131397999-99414d026330?auto=format&fit=crop&w=1600&q=80')",
+          backgroundImage: "url('/assets/images/monterrey-skyline.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
+        {/* Dark Overlay for Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/70 to-slate-900/40 z-5"></div>
+        
         <div className="relative max-w-[1200px] w-full mx-auto px-8 md:px-16 z-10 text-left flex flex-col items-start justify-center gap-6 sm:gap-8">
           
           <span className="text-[#22B8CF] text-xs font-bold tracking-[0.35em] uppercase block">
