@@ -178,52 +178,82 @@ export default function Home({ lang }: HomeProps) {
 
   return (
     <>
-      {/* 2. HERO SECTION */}
+      {/* 2. HERO SECTION - LUXURY SPLIT LAYOUT */}
       <section 
         id="hero" 
-        className="relative text-white pt-28 pb-28 sm:pt-40 sm:pb-40 lg:pt-52 lg:pb-52 overflow-hidden flex items-center justify-start min-h-[80vh] bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/assets/images/skyline-de-monterrey.webp'), url('/assets/images/monterrey-skyline.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+        className="relative w-full min-h-screen overflow-hidden flex flex-col lg:flex-row"
       >
-        {/* Dark Overlay for Text Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/70 to-slate-900/40 z-5"></div>
-        
-        <div className="relative max-w-[1200px] w-full mx-auto px-8 md:px-16 z-10 text-left flex flex-col items-start justify-center gap-6 sm:gap-8">
+        {/* Cinematic Overlay Gradient */}
+        <div 
+          className="absolute inset-0 z-10 pointer-events-none"
+          style={{
+            background: "linear-gradient(90deg, rgba(7,19,38,0.96) 0%, rgba(7,19,38,0.88) 28%, rgba(7,19,38,0.55) 48%, rgba(7,19,38,0.15) 70%, rgba(7,19,38,0.00) 100%)"
+          }}
+        ></div>
+
+        {/* HERO LEFT - LUXURY EDITORIAL CONTENT */}
+        <div className="hero-left w-full lg:w-[45%] flex flex-col items-start justify-center px-6 sm:px-10 md:px-16 py-20 lg:py-0 order-2 lg:order-1 z-20 relative min-h-[50vh] lg:min-h-screen bg-[#071326]">
           
-          <span className="text-[#22B8CF] text-xs font-bold tracking-[0.35em] uppercase block">
-            <span className="lang-en">PRIVATE MEDICAL CONCIERGE</span>
-            <span className="lang-es font-sans">ENLACE LOGÍSTICO MÉDICO PRIVADO</span>
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-serif font-light tracking-wide text-white uppercase leading-[1.12] max-w-4xl">
-            <span className="lang-en block">Premium Surgical Access <br className="hidden sm:inline" /><span className="font-light italic shrink-0 text-slate-300 normal-case tracking-normal">&amp; Private Travel Coordination</span></span>
-            
-            <span className="lang-es block">Acceso Quirúrgico Premium <br className="hidden sm:inline" /><span className="font-light italic shrink-0 text-slate-300 normal-case tracking-normal">&amp; Coordinación Privada de Viajes</span></span>
-          </h1>
-
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-200 font-normal leading-relaxed max-w-2xl font-sans normal-case">
-            <span className="lang-en">
-              Connecting Texas patients with certified surgeons in Monterrey through executive-level logistical care.
+          <div className="space-y-6 sm:space-y-8 max-w-[520px] text-white">
+            {/* Luxury Badge */}
+            <span className="text-[#22B8CF] text-[10px] sm:text-xs font-bold tracking-[0.35em] uppercase block">
+              <span className="lang-en">PRIVATE MEDICAL CONCIERGE</span>
+              <span className="lang-es font-sans">ENLACE LOGÍSTICO MÉDICO PRIVADO</span>
             </span>
-            <span className="lang-es font-sans">
-              Conectando pacientes de Texas con cirujanos certificados en Monterrey mediante atención logística ejecutiva.
-            </span>
-          </p>
 
-          <div className="flex flex-col sm:flex-row items-start justify-start gap-4 w-full sm:w-auto pt-6 z-10">
-            <button 
-              onClick={() => scrollToLeadCaptureWithProcedure("")}
-              className="bg-[#22B8CF] hover:bg-[#22B8CF]/95 text-[#0F172A] font-extrabold text-xs py-4 px-12 tracking-widest uppercase transition-all duration-300 text-center cursor-pointer shadow-lg shadow-[#0F172A]/40 rounded-none h-13 flex items-center justify-center"
+            {/* Main Title with Responsive Typography */}
+            <h1 
+              className="font-serif font-light tracking-wide text-white uppercase leading-[1.15] max-w-[520px]"
+              style={{ fontSize: "clamp(52px, 6vw, 92px)" }}
             >
-              <span className="lang-en">Request Coordination Quote</span>
-              <span className="lang-es">Solicitar Cotización de Coordinación</span>
-            </button>
+              <span className="lang-en block">
+                Premium Surgical Access 
+                <br />
+                <span className="font-light italic text-slate-300 normal-case tracking-normal text-[clamp(34px,4vw,58px)] block leading-[1.2]">
+                  &amp; Private Travel Coordination
+                </span>
+              </span>
+              
+              <span className="lang-es block">
+                Acceso Quirúrgico Premium
+                <br />
+                <span className="font-light italic text-slate-300 normal-case tracking-normal text-[clamp(34px,4vw,58px)] block leading-[1.2]">
+                  &amp; Coordinación Privada de Viajes
+                </span>
+              </span>
+            </h1>
+
+            {/* Descriptive Paragraph */}
+            <p className="text-sm sm:text-base text-slate-200 font-normal leading-relaxed max-w-[420px] font-sans normal-case">
+              <span className="lang-en">
+                Connecting Texas patients with certified surgeons in Monterrey through executive-level logistical care.
+              </span>
+              <span className="lang-es font-sans">
+                Conectando pacientes de Texas con cirujanos certificados en Monterrey mediante atención logística ejecutiva.
+              </span>
+            </p>
+
+            {/* CTA Button */}
+            <div className="pt-4">
+              <button 
+                onClick={() => scrollToLeadCaptureWithProcedure("")}
+                className="bg-[#22B8CF] hover:bg-[#22B8CF]/95 text-[#0F172A] font-extrabold text-xs py-4 px-12 tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-lg shadow-[#0F172A]/40 rounded-none flex items-center justify-center gap-2"
+              >
+                <span className="lang-en">Request Coordination Quote</span>
+                <span className="lang-es">Solicitar Cotización</span>
+              </button>
+            </div>
           </div>
-          
+        </div>
+
+        {/* HERO RIGHT - CINEMATIC MONTERREY SKYLINE */}
+        <div className="hero-right w-full lg:w-[55%] min-h-[50vh] lg:min-h-screen overflow-hidden order-1 lg:order-2">
+          <img 
+            src="/assets/images/skyline-de-monterrey.webp"
+            alt="Monterrey Skyline - Medical Tourism Destination"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+          />
         </div>
       </section>
 
