@@ -183,7 +183,7 @@ export default function Home({ lang }: HomeProps) {
         id="hero" 
         className="relative text-white pt-28 pb-28 sm:pt-40 sm:pb-40 lg:pt-52 lg:pb-52 overflow-hidden flex items-center justify-start min-h-[80vh] bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/assets/images/monterrey-skyline.jpg')",
+          backgroundImage: "url('/assets/images/skyline-de-monterrey.webp'), url('/assets/images/monterrey-skyline.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
