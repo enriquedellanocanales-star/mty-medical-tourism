@@ -1,0 +1,8 @@
+{
+  "name": "MTY Medical Tourism",
+  "description": "Executive Medical Travel & Coordinated Surgical Care for international self-pay patients.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
