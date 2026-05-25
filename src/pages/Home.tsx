@@ -30,7 +30,11 @@ import {
   Calendar,
   Layers,
   Heart,
-  Briefcase
+  Briefcase,
+  Shield,
+  Building,
+  Car,
+  Headphones
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -178,84 +182,100 @@ export default function Home({ lang }: HomeProps) {
 
   return (
     <>
-      {/* 2. HERO SECTION - LUXURY SPLIT LAYOUT */}
+      {/* 2. HERO SECTION - LAYERED ASYMMETRIC DESIGN (responsive) */}
       <section 
         id="hero" 
-        className="relative w-full min-h-screen overflow-hidden flex flex-col lg:flex-row"
+        className="relative w-full h-[60vh] md:h-[85vh] bg-[#071326] overflow-hidden flex flex-col md:flex-row items-center"
       >
-        {/* Cinematic Overlay Gradient */}
-        <div 
-          className="absolute inset-0 z-10 pointer-events-none"
-          style={{
-            background: "linear-gradient(90deg, rgba(7,19,38,0.96) 0%, rgba(7,19,38,0.88) 28%, rgba(7,19,38,0.55) 48%, rgba(7,19,38,0.15) 70%, rgba(7,19,38,0.00) 100%)"
-          }}
-        ></div>
+        {/* LAYER 2: IMAGE (full width with precision fade) */}
+        <div className="absolute left-0 top-0 h-full w-full z-0 overflow-hidden">
+          <img 
+            src="/assets/images/skyline-de-monterrey.png"
+            alt="Monterrey Skyline"
+            className="w-full h-full object-cover brightness-[0.9] contrast-[1.2] saturate-[1.1]"
+            style={{ objectPosition: 'center 35%' }}
+            loading="eager"
+          />
+          {/* Cinematic overlay gradient: soft humo, not opaque block */}
+          <div 
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `linear-gradient(to right, 
+                rgba(7, 19, 38, 0.70) 0%, 
+                rgba(7, 19, 38, 0.58) 32%, 
+                rgba(7, 19, 38, 0.25) 55%, 
+                rgba(7, 19, 38, 0.02) 75%, 
+                transparent 100%)`
+            }}
+          ></div>
+        </div>
 
-        {/* HERO LEFT - LUXURY EDITORIAL CONTENT */}
-        <div className="hero-left w-full lg:w-[45%] flex flex-col items-start justify-center px-6 sm:px-10 md:px-16 py-20 lg:py-0 order-2 lg:order-1 z-20 relative min-h-[50vh] lg:min-h-screen bg-[#071326]">
-          
-          <div className="space-y-6 sm:space-y-8 max-w-[520px] text-white">
-            {/* Luxury Badge */}
-            <span className="text-[#22B8CF] text-[10px] sm:text-xs font-bold tracking-[0.35em] uppercase block">
+        {/* Mobile-only: soft bottom fade to next section */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-10 z-20 pointer-events-none md:hidden"
+          style={{ background: 'linear-gradient(to bottom, transparent 20%, rgba(250,249,246,0.85) 100%)' }}
+        />
+
+        {/* LAYER 3: CONTENT (left side desktop, centered mobile) */}
+        <div className="relative z-10 w-full h-full flex flex-col md:flex-row md:items-center justify-center md:justify-start px-6 sm:px-10 md:pl-12 lg:pl-16 py-10 md:py-0">
+          <div className="max-w-[230px] sm:max-w-[340px] md:max-w-[500px] text-center md:text-left">
+            
+            {/* Eyebrow Badge */}
+            <span className="text-[#22B8CF] text-[7px] md:text-[10px] font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase block mb-1.5 md:mb-3">
               <span className="lang-en">PRIVATE MEDICAL CONCIERGE</span>
-              <span className="lang-es font-sans">ENLACE LOGÍSTICO MÉDICO PRIVADO</span>
+              <span className="lang-es">ENLACE LOGÍSTICO MÉDICO</span>
             </span>
 
-            {/* Main Title with Responsive Typography */}
+            {/* Decorative Line */}
+            <div className="w-8 md:w-10 h-px bg-[#22B8CF] mb-1.5 md:mb-4 mx-auto md:mx-0"></div>
+
+            {/* Main Title */}
             <h1 
-              className="font-serif font-light tracking-wide text-white uppercase leading-[1.15] max-w-[520px]"
-              style={{ fontSize: "clamp(52px, 6vw, 92px)" }}
+              className="text-[#F2F1ED] font-serif uppercase text-[clamp(16px,4.2vw,65px)] md:text-[clamp(38px,4.5vw,65px)] leading-[1.1] md:leading-[0.95] mb-2 md:mb-6 font-light tracking-[0.01em] md:tracking-tight"
             >
-              <span className="lang-en block">
-                Premium Surgical Access 
-                <br />
-                <span className="font-light italic text-slate-300 normal-case tracking-normal text-[clamp(34px,4vw,58px)] block leading-[1.2]">
-                  &amp; Private Travel Coordination
-                </span>
-              </span>
-              
-              <span className="lang-es block">
-                Acceso Quirúrgico Premium
-                <br />
-                <span className="font-light italic text-slate-300 normal-case tracking-normal text-[clamp(34px,4vw,58px)] block leading-[1.2]">
-                  &amp; Coordinación Privada de Viajes
-                </span>
-              </span>
+              <span className="lang-en block">Premium Surgical Access</span>
+              <span className="lang-es block">Acceso Quirúrgico Premium</span>
             </h1>
 
-            {/* Descriptive Paragraph */}
-            <p className="text-sm sm:text-base text-slate-200 font-normal leading-relaxed max-w-[420px] font-sans normal-case">
+            {/* Italic Subtitle */}
+            <h2 
+              className="text-[#D6DCE5] font-serif text-[clamp(10px,2.6vw,30px)] md:text-[clamp(18px,2.5vw,30px)] italic uppercase font-normal md:font-light leading-[1.35] md:leading-[1.1] mb-2 md:mb-6"
+            >
+              <span className="lang-en block">&amp; Private Travel Coordination</span>
+              <span className="lang-es block">&amp; Coordinación Privada de Viajes</span>
+            </h2>
+
+            {/* Description */}
+            <p className="text-[#D6DCE5] text-[11px] md:text-[13px] lg:text-[14px] mb-3 md:mb-6 leading-relaxed font-light max-w-[420px] mx-auto md:mx-0">
               <span className="lang-en">
                 Connecting Texas patients with certified surgeons in Monterrey through executive-level logistical care.
               </span>
-              <span className="lang-es font-sans">
+              <span className="lang-es">
                 Conectando pacientes de Texas con cirujanos certificados en Monterrey mediante atención logística ejecutiva.
               </span>
             </p>
 
-            {/* CTA Button */}
-            <div className="pt-4">
-              <button 
-                onClick={() => scrollToLeadCaptureWithProcedure("")}
-                className="bg-[#22B8CF] hover:bg-[#22B8CF]/95 text-[#0F172A] font-extrabold text-xs py-4 px-12 tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-lg shadow-[#0F172A]/40 rounded-none flex items-center justify-center gap-2"
-              >
-                <span className="lang-en">Request Coordination Quote</span>
-                <span className="lang-es">Solicitar Cotización</span>
-              </button>
-            </div>
+            {/* CTA Button - Executive, refined, minimal (responsive) */}
+            <button 
+              onClick={() => scrollToLeadCaptureWithProcedure("")}
+              className="bg-[#22B8CF]/80 md:bg-[#22B8CF] text-[#071326] font-semibold tracking-[0.06em] md:tracking-[0.08em] uppercase text-[7px] md:text-[9px] py-1 md:py-1.5 px-3 md:px-5 hover:bg-white transition-all cursor-pointer rounded-none mb-3 md:mb-7"
+            >
+              <span className="lang-en">Begin Consultation</span>
+              <span className="lang-es">Comenzar Consulta</span>
+            </button>
+
+
           </div>
         </div>
-
-        {/* HERO RIGHT - CINEMATIC MONTERREY SKYLINE */}
-        <div className="hero-right w-full lg:w-[55%] min-h-[50vh] lg:min-h-screen overflow-hidden order-1 lg:order-2">
-          <img 
-            src="/assets/images/skyline-de-monterrey.webp"
-            alt="Monterrey Skyline - Medical Tourism Destination"
-            className="w-full h-full object-cover object-center"
-            loading="eager"
-          />
-        </div>
       </section>
+
+      {/* TRUST STRIP — bridge between hero and content */}
+      <div className="bg-white border-b border-slate-100 py-5 px-4">
+        <p className="text-center text-[#64748B] text-[8px] md:text-[9px] tracking-[0.28em] uppercase font-sans">
+          <span className="lang-en">Board-Certified Physicians &nbsp;&bull;&nbsp; Executive Coordination &nbsp;&bull;&nbsp; Bilingual Support</span>
+          <span className="lang-es font-sans">Médicos Certificados &nbsp;&bull;&nbsp; Coordinación Ejecutiva &nbsp;&bull;&nbsp; Soporte Bilingüe</span>
+        </p>
+      </div>
 
       {/* 3. SURGICAL PORTFOLIO INCLUSIONS */}
       <section id="services" className="py-24 sm:py-32 lg:py-40 bg-white border-b border-slate-100 relative">
@@ -409,8 +429,8 @@ export default function Home({ lang }: HomeProps) {
               
               <div className="lg:col-span-7 flex flex-col items-start gap-4">
                 <span className="text-[#22B8CF] text-[9.5px] font-bold tracking-[0.25em] uppercase">
-                  <span className="lang-en font-mono font-bold">CONCIERGE HOUSING CORRIDOR</span>
-                  <span className="lang-es font-bold">CONCIERGE DE ALOJAMIENTO PREFERENCIAL</span>
+                  <span className="lang-en">Recovery Accommodations</span>
+                  <span className="lang-es font-sans">Alojamiento de Recuperación</span>
                 </span>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold tracking-wider uppercase leading-snug">
                   <span className="lang-en">Executive, Secure Recovery Accommodations</span>
@@ -418,7 +438,7 @@ export default function Home({ lang }: HomeProps) {
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans normal-case">
                   <span className="lang-en">
-                    Our clients are lodged in vetted, private executive recovery accommodations in San Pedro Garza García—Mexico’s most secure premium district. These spaces are fully suited for peaceful post-surgical resting, with access to clinical-grade care elements, custom menus coordinates, and dedicated private transiting back and forth to medical hubs.
+                    We arrange stays in carefully selected private accommodations in San Pedro Garza García, Monterrey's premier residential district. Each property is chosen for its calm environment, privacy, and proximity to surgical facilities—ideal for post-operative rest.
                   </span>
                   <span className="lang-es font-sans">
                     Nuestros clientes descansan en exclusivas suites de alojamiento ejecutivo en San Pedro Garza García, la zona urbana de mayor seguridad en el país. Los espacios garantizan un reposo confortable, alimentación adaptada, y enlace directo de chofer privado a las citas clínicas.
@@ -455,17 +475,17 @@ export default function Home({ lang }: HomeProps) {
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[#164E63] text-xs font-bold tracking-[0.25em] uppercase block mb-3">
-              <span className="lang-en font-mono font-bold">TRANSPARENT COOPERATIVE AGREEMENT</span>
-              <span className="lang-es font-bold">ALCANCE DEFINITIVO DE LA ASISTENCIA</span>
+              <span className="lang-en">What Is Included</span>
+              <span className="lang-es">Qué Está Incluido</span>
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wider uppercase text-[#0F172A]">
-              <span className="lang-en">Scope of Coordinated Coverage</span>
-              <span className="lang-es font-sans text-2xl sm:text-3xl font-bold">Inclusiones vs Responsabilidades</span>
+              <span className="lang-en">Package Scope</span>
+              <span className="lang-es font-sans text-2xl sm:text-3xl font-bold">Alcance del Paquete</span>
             </h2>
             <div className="h-0.5 w-16 bg-[#164E63]/30 mx-auto my-3"></div>
             <p className="text-xs sm:text-sm text-[#64748B] tracking-widest uppercase mt-2">
-              <span className="lang-en">Providing exact clarity on package borders for legal and patient tranquility</span>
-              <span className="lang-es">Claridad absoluta para blindar las operaciones comerciales del corredor transfronterizo</span>
+              <span className="lang-en">Full transparency on what your coordination includes and what falls outside.</span>
+              <span className="lang-es">Claridad total sobre lo que incluye su coordinación y lo que queda fuera.</span>
             </p>
           </div>
 
@@ -542,8 +562,8 @@ export default function Home({ lang }: HomeProps) {
               </div>
 
               <div className="border-t border-[#164E63]/20 pt-4 mt-6 text-xs text-[#164E63] font-bold">
-                <span className="lang-en">&bull; Comprehensive logistics desk at patient disposal 24/7</span>
-                <span className="lang-es">&bull; Mesa de soporte logístico transfronterizo disponible 24/7</span>
+                <span className="lang-en">&bull; Personal coordination support throughout your journey</span>
+                <span className="lang-es">&bull; Apoyo de coordinación personal durante todo su proceso</span>
               </div>
             </div>
 
@@ -618,8 +638,8 @@ export default function Home({ lang }: HomeProps) {
               </div>
 
               <div className="border-t border-amber-500/20 pt-4 mt-6 text-xs text-amber-800 font-bold">
-                <span className="lang-en">&bull; Flight booking desk available for separated itinerary setup</span>
-                <span className="lang-es">&bull; Enlace logístico disponible para planeamiento externo de vuelos</span>
+                <span className="lang-en">&bull; Separate flight assistance available upon request</span>
+                <span className="lang-es">&bull; Asistencia con vuelos disponible bajo solicitud</span>
               </div>
             </div>
 
@@ -634,17 +654,17 @@ export default function Home({ lang }: HomeProps) {
           
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
             <span className="text-[#164E63] text-xs font-bold tracking-[0.25em] uppercase block mb-3">
-              <span className="lang-en">STEP-BY-STEP PATIENT CORRIDOR</span>
-              <span className="lang-es font-sans">FLUJO DE PROCESO LOGÍSTICO</span>
+              <span className="lang-en">How It Works</span>
+              <span className="lang-es font-sans">Cómo Funciona</span>
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wider uppercase text-[#0F172A]">
-              <span className="lang-en">From Intake to Recovery: The Flow</span>
-              <span className="lang-es font-sans">El Proceso de Coordinación Quirúrgica</span>
+              <span className="lang-en">From Inquiry to Recovery</span>
+              <span className="lang-es font-sans">De la Consulta a la Recuperación</span>
             </h2>
-            <div className="h-px w-16 bg-[#164E63]/30 mx-auto my-3 font-semibold"></div>
+            <div className="h-px w-16 bg-[#164E63]/30 mx-auto my-3"></div>
             <p className="text-[11px] sm:text-xs text-[#64748B] tracking-widest uppercase">
-              <span className="lang-en font-sans">Designed for safety, discretion, and absolute medical safety</span>
-              <span className="lang-es font-sans font-bold">Monitoreado en tiempo real con estándares de atención bicultural de confianza</span>
+              <span className="lang-en">A clear, private process designed around your comfort and safety.</span>
+              <span className="lang-es font-sans">Un proceso claro y privado diseñado para tu comodidad y seguridad.</span>
             </p>
           </div>
 
@@ -661,9 +681,9 @@ export default function Home({ lang }: HomeProps) {
                 <span className="lang-en">I. Confidential Request</span>
                 <span className="lang-es font-sans">I. Solicitud Confidencial</span>
               </h3>
-              <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed font-sans font-normal">
                 <span className="lang-en font-sans">
-                  Submit your contact coordination coordinates. We establish immediate personal, trusted communication protecting your absolute discretion.
+                  Share your contact details. We establish immediate, trusted personal communication with full discretion.
                 </span>
                 <span className="lang-es">
                   Envíe sus datos de contacto iniciales. Establecemos de inmediato una comunicación personal directa y de absoluta reserva.
@@ -720,17 +740,17 @@ export default function Home({ lang }: HomeProps) {
           
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
             <span className="text-[#164E63] text-xs font-bold tracking-[0.25em] uppercase block mb-3">
-              <span className="lang-en font-mono">BILINGUAL PATIENT ANTHOLOGY</span>
-              <span className="lang-es">CRÓNICAS DE RECUPERACIÓN REALES</span>
+              <span className="lang-en">Patient Experiences</span>
+              <span className="lang-es">Experiencias de Pacientes</span>
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wider text-[#0F172A] uppercase">
-              <span className="lang-en">The Texas Patient Archive</span>
-              <span className="lang-es font-sans">Testimonios de Pacientes de Texas</span>
+              <span className="lang-en">What Our Patients Say</span>
+              <span className="lang-es font-sans">Lo Que Dicen Nuestros Pacientes</span>
             </h2>
             <div className="h-0.5 w-16 bg-[#164E63]/30 mx-auto my-3"></div>
             <p className="text-[11px] sm:text-xs text-[#64748B] tracking-widest uppercase">
-              <span className="lang-en">True surgical narratives with curated bicultural oversight. No generic models or stock actors.</span>
-              <span className="lang-es">Historias y crónicas clínicas compartidas por pacientes con absoluta privacidad de identidad</span>
+              <span className="lang-en">Shared experiences from Texas patients, presented with full privacy.</span>
+              <span className="lang-es">Experiencias compartidas por pacientes de Texas, presentadas con total privacidad.</span>
             </p>
           </div>
 
@@ -739,7 +759,7 @@ export default function Home({ lang }: HomeProps) {
             {/* Experience Card 1 - Gallbladder from Dallas */}
             <div className="bg-[#FAFAF9] p-6 sm:p-8 border border-slate-200/60 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-4 animate-pulse">
+                <div className="flex items-center gap-1 text-amber-500 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill="currentColor" />
                   ))}
@@ -772,7 +792,7 @@ export default function Home({ lang }: HomeProps) {
             {/* Experience Card 2 - LASIK from Austin */}
             <div className="bg-[#FAFAF9] p-6 sm:p-8 border border-slate-200/60 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-4 text-amber-400">
+                <div className="flex items-center gap-1 text-amber-500 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill="currentColor" />
                   ))}
@@ -805,7 +825,7 @@ export default function Home({ lang }: HomeProps) {
             {/* Experience Card 3 - Reconstructive Support from San Antonio */}
             <div className="bg-[#FAFAF9] p-6 sm:p-8 border border-slate-200/60 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-4 font-bold">
+                <div className="flex items-center gap-1 text-amber-500 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill="currentColor" />
                   ))}
@@ -837,31 +857,6 @@ export default function Home({ lang }: HomeProps) {
 
           </div>
 
-          {/* Video Placeholder Box - Design integrity placeholder */}
-          <div className="mt-12 bg-slate-50 border border-slate-200 p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#164E63] flex items-center justify-center text-[#22B8CF] shadow-md shrink-0">
-                <Activity size={20} />
-              </div>
-              <div>
-                <strong className="text-sm font-serif text-[#0F172A] block uppercase tracking-wide font-bold">
-                  <span className="lang-en">VERIFIABLE MEDICAL LOGS ARCHIVE</span>
-                  <span className="lang-es font-sans font-bold">ARCHIVO QUIRÚRGICO DOCUMENTAL DE RESPALDO</span>
-                </strong>
-                <span className="text-xs text-[#64748B] font-normal font-sans">
-                  <span className="lang-en">Anonymous interview files and hotel logs available to serious prospects during consultation steps.</span>
-                  <span className="lang-es">Copias de bitácoras de coordinación hotelera y médica disponibles bajo confidencialidad.</span>
-                </span>
-              </div>
-            </div>
-            <button 
-              onClick={() => scrollToLeadCaptureWithProcedure("")}
-              className="border border-[#164E63] hover:bg-[#164E63] hover:text-white text-[#164E63] font-bold text-xs py-3 px-6 tracking-widest uppercase transition-colors shrink-0 cursor-pointer"
-            >
-              <span className="lang-en font-serif">Inquire Case Archives</span>
-              <span className="lang-es font-sans">Solicitar Bitácoras</span>
-            </button>
-          </div>
 
         </div>
       </section>
@@ -872,17 +867,17 @@ export default function Home({ lang }: HomeProps) {
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[#22B8CF] text-xs font-bold tracking-[0.3em] uppercase block mb-3">
-              <span className="lang-en font-mono text-[#22B8CF]">ANSWERS TO OPERATIONS CRITICAL CHECKS</span>
-              <span className="lang-es font-sans">RESPUESTAS A DUDAS DE OPERACIÓN MUNDIAL</span>
+              <span className="lang-en">Common Questions</span>
+              <span className="lang-es font-sans">Preguntas Frecuentes</span>
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-wider text-[#0F172A] uppercase">
-              <span className="lang-en">Concierge FAQ Desk</span>
-              <span className="lang-es font-sans text-2xl sm:text-3xl leading-snug">Preguntas Críticas Frecuentes</span>
+              <span className="lang-en">Patient FAQ</span>
+              <span className="lang-es font-sans text-2xl sm:text-3xl leading-snug">Preguntas del Paciente</span>
             </h2>
             <div className="h-0.5 w-16 bg-[#164E63]/30 mx-auto my-3"></div>
             <p className="text-xs sm:text-sm text-[#64748B] tracking-widest uppercase">
-              <span className="lang-en">Addressing patient travel parameters transparently with elite clarity</span>
-              <span className="lang-es">Despejando inquietudes normativas, migratorias y de viabilidad quirúrgica</span>
+              <span className="lang-en">Honest answers to the questions patients ask most.</span>
+              <span className="lang-es">Respuestas claras a las preguntas más frecuentes de nuestros pacientes.</span>
             </p>
           </div>
 
@@ -1077,17 +1072,17 @@ export default function Home({ lang }: HomeProps) {
           
           <div className="text-center mb-12">
             <span className="text-[#22B8CF] text-xs font-bold tracking-[0.3em] uppercase block mb-3">
-              <span className="lang-en font-mono text-[#22B8CF]">CONFIDENTIAL SECURE SYSTEM</span>
-              <span className="lang-es font-sans text-xs">SISTEMA SEGURO Y ALTAMENTE CONFIDENCIAL</span>
+              <span className="lang-en">Confidential Intake</span>
+              <span className="lang-es font-sans">Solicitud Confidencial</span>
             </span>
             <h2 className="text-3xl font-serif font-bold tracking-wider text-white uppercase">
-              <span className="lang-en">Patient Coordination Questionnaire</span>
-              <span className="lang-es font-sans text-2xl sm:text-3xl leading-snug font-bold">Cuestionario de Enlace Quirúrgico</span>
+              <span className="lang-en">Begin Your Consultation</span>
+              <span className="lang-es font-sans text-2xl sm:text-3xl leading-snug font-bold">Comienza Tu Consulta</span>
             </h2>
             <div className="h-0.5 w-16 bg-[#22B8CF]/30 mx-auto my-3"></div>
             <p className="text-xs sm:text-sm text-slate-300 tracking-wider">
-              <span className="lang-en font-sans">Begin your private bicultural entry file. Our registrars will respond in under 4 hours.</span>
-              <span className="lang-es font-sans text-xs">Inicie su expediente logístico privado. Reciba una respuesta médica en menos de 4 horas hábiles.</span>
+              <span className="lang-en font-sans">Share a few details and a bilingual coordinator will reach out within 4 business hours.</span>
+              <span className="lang-es font-sans text-xs">Comparte algunos datos y un coordinador bilingüe te contactará en menos de 4 horas hábiles.</span>
             </p>
           </div>
 
@@ -1195,10 +1190,10 @@ export default function Home({ lang }: HomeProps) {
                           className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer"
                         >
                           <option value="" disabled className="text-slate-500">Select location...</option>
-                          <option value="Dallas_FTW font-sans">Dallas / Fort Worth Metroplex</option>
+                          <option value="Dallas_FTW">Dallas / Fort Worth Metroplex</option>
                           <option value="Austin">Austin Area</option>
                           <option value="Houston">Houston Metropolitan Area</option>
-                          <option value="San_Antonio font-sans">San Antonio Area</option>
+                          <option value="San_Antonio">San Antonio Area</option>
                           <option value="El_Paso">El Paso / West Texas</option>
                           <option value="Other_US">Other Out of State Area</option>
                         </select>
@@ -1238,12 +1233,12 @@ export default function Home({ lang }: HomeProps) {
                           onChange={handleInputChange}
                           className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer"
                         >
-                          <option value="">Choose proceduring option...</option>
+                          <option value="">Select procedure...</option>
                           <option value="Laparoscopic_Gallbladder">Laparoscopic Gallbladder ($4,900 USD)</option>
                           <option value="Advanced_LASIK">Advanced LASIK ($3,400 USD)</option>
                           <option value="Rhinoplasty">Rhinoplasty ($4,500 USD)</option>
                           <option value="Smile_Makeover">German Zirconia Smile Makeover ($5,800 USD)</option>
-                          <option value="Advanced_Reflux font-sans">Advanced Reflux Correction ($5,800 USD)</option>
+                          <option value="Advanced_Reflux">Advanced Reflux Correction ($5,800 USD)</option>
                           <option value="Laparoscopic_Hysterectomy">Laparoscopic Hysterectomy ($5,900 USD)</option>
                         </select>
                       </div>
@@ -1358,8 +1353,8 @@ export default function Home({ lang }: HomeProps) {
                             className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
                           >
                             <option value="">Select funding type status...</option>
-                            <option value="hsa">Plannig to cover via HSA/FSA Funds</option>
-                            <option value="out_pocket font-sans">Self-Pay Out-of-pocket savings</option>
+                            <option value="hsa">Planning to cover via HSA/FSA Funds</option>
+                            <option value="out_pocket">Self-Pay Out-of-pocket savings</option>
                             <option value="seeking_reimburse">Seeking insurer reimbursement letter</option>
                             <option value="unsure">Need financial advisory guidance</option>
                           </select>
@@ -1381,7 +1376,7 @@ export default function Home({ lang }: HomeProps) {
                           <option value="">Select communication target...</option>
                           <option value="whatsapp">Secure WhatsApp Chat</option>
                           <option value="phone">Bicultural Registrar Phone Call</option>
-                          <option value="email font-sans">Comprehensive Detailed Email Plan</option>
+                          <option value="email">Detailed Email</option>
                         </select>
                       </div>
 
@@ -1440,15 +1435,15 @@ export default function Home({ lang }: HomeProps) {
                   </div>
                   <div className="space-y-2">
                     <h3 className="font-serif text-xl sm:text-2xl font-bold uppercase tracking-wider text-white">
-                      <span className="lang-en font-serif">Expedite Link Secured</span>
-                      <span className="lang-es font-sans">Enlace Quirúrgico Vinculado</span>
+                      <span className="lang-en">Consultation Received</span>
+                      <span className="lang-es font-sans">Consulta Recibida</span>
                     </h3>
                     <p className="text-sm text-slate-300 leading-relaxed font-sans max-w-md mx-auto normal-case font-normal">
                       <span className="lang-en">
-                        Thank you, {formData.fullName}. Your confidential portfolio has been registered under reference #{Math.floor(Math.random() * 900000) + 100000}. A bicultural clinical registrar will contact you shortly using your preferred method.
+                        Thank you, {formData.fullName}. Your request has been received. A bilingual coordinator will contact you shortly via your preferred method.
                       </span>
                       <span className="lang-es">
-                        Agradecemos su confianza, {formData.fullName}. Su expediente temporal se registró con éxito bajo el folio #{Math.floor(Math.random() * 900000) + 100000}. Un registrador de enlace bilingüe le contactará en breve.
+                        Gracias, {formData.fullName}. Tu solicitud ha sido recibida. Un coordinador bilingüe se pondrá en contacto contigo pronto.
                       </span>
                     </p>
                   </div>
@@ -1456,8 +1451,8 @@ export default function Home({ lang }: HomeProps) {
                     onClick={resetForm}
                     className="border border-white/25 hover:border-white/60 text-white font-bold text-xs py-3 px-6 uppercase tracking-widest transition-colors cursor-pointer"
                   >
-                    <span className="lang-en">Submit another file</span>
-                    <span className="lang-es font-sans text-xs">Registrar otro procedimiento</span>
+                    <span className="lang-en">Submit another request</span>
+                    <span className="lang-es font-sans text-xs">Enviar otra solicitud</span>
                   </button>
                 </motion.div>
               )}
