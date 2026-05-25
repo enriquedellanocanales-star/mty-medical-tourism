@@ -125,18 +125,14 @@ function AppContent() {
           {/* Language toggle <select id="lang-toggle"> and strategic Intake Header CTA */}
           <div className="flex items-center gap-4">
             
-            {/* Custom styled select widget */}
-            <div className="relative inline-block text-left">
-              <select 
-                id="lang-toggle"
-                value={lang} 
-                onChange={(e) => setLang(e.target.value as "en" | "es")}
-                className="bg-[#164E63] text-white text-[10px] md:text-xs font-bold border border-white/20 px-2 md:px-3 py-1 md:py-2 rounded-none focus:outline-none focus:border-[#22B8CF]/80 hover:bg-[#164E63]/80 cursor-pointer uppercase tracking-wider h-8 md:h-10"
-              >
-                <option value="en">English (EN)</option>
-                <option value="es">Español (ES)</option>
-              </select>
-            </div>
+            {/* Language toggle — shows the language to switch TO, not current */}
+            <button
+              id="lang-toggle"
+              onClick={() => setLang(lang === "en" ? "es" : "en")}
+              className="bg-[#164E63] text-white text-[10px] md:text-xs font-bold border border-white/20 px-2 md:px-3 py-1 md:py-2 rounded-none focus:outline-none focus:border-[#22B8CF]/80 hover:bg-[#164E63]/80 cursor-pointer uppercase tracking-wider h-8 md:h-10"
+            >
+              {lang === "en" ? "Español" : "English"}
+            </button>
 
             <button 
               onClick={handleStartFileClick}

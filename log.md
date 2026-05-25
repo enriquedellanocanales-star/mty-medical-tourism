@@ -2479,5 +2479,70 @@ dist/assets/index-0FGaTPVQ.js   492.56 kB │ gzip: 148.27 kB
 
 **Assessment**: Site has crossed the "premium enough to sell" threshold. Further design iteration has diminishing returns. Ship, collect leads, iterate with market feedback.
 
+---
+
+---
+
+# PHASE 10: LANGUAGE TOGGLE UX FIX
+**Date**: May 25, 2026  
+**Scope**: Single component — language selector in header  
+**Type**: UX correction (not visual redesign)
+
+---
+
+## PROBLEM
+
+The `<select>` element was bound to `value={lang}`, meaning it always displayed the **current** active language:
+
+- Site in English → selector showed `"ENGLISH (EN)"` ← confusing
+- Site in Spanish → selector showed `"ESPAÑOL (ES)"` ← confusing
+
+**UX principle violated**: A toggle/switch control should show the **destination**, not the current state. Showing the active language implies "this is what you have" — users don't know if clicking will do anything.
+
+**Reference pattern**: Wikipedia, Apple.com, luxury hospitality sites — all show the alternate language as the clickable option.
+
+---
+
+## SOLUTION
+
+Replaced `<select>` with `<button>` that displays the language to switch **to**:
+
+```tsx
+// Before — select bound to current lang (always shows active)
+<select value={lang} onChange={(e) => setLang(e.target.value)}>
+  <option value="en">English (EN)</option>
+  <option value="es">Español (ES)</option>
+</select>
+
+// After — button shows the opposite (what you'll get on click)
+<button onClick={() => setLang(lang === "en" ? "es" : "en")}>
+  {lang === "en" ? "Español" : "English"}
+</button>
+```
+
+**Result**:
+- Site in English → button shows `"Español"` → click → switches to Spanish ✓
+- Site in Spanish → button shows `"English"` → click → switches to English ✓
+
+---
+
+## WHAT WAS PRESERVED
+
+- Identical className (all styling, dimensions, colors unchanged)
+- Same `id="lang-toggle"`
+- Same responsive behavior (`h-8 md:h-10`, `px-2 md:px-3`)
+- Same visual appearance in the header
+
+---
+
+## FILES MODIFIED
+
+| File | Change |
+|------|--------|
+| `src/App.tsx` | `<select>` → `<button>` for language toggle |
+
+## BUILD
+✅ 0 errors · 0 warnings · built in 8.25s
+
 
 
