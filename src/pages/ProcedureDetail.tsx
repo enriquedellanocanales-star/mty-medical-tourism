@@ -10,7 +10,7 @@ import {
   Building2, 
   ChevronDown, 
   ChevronUp, 
-  Plane, 
+  Car, 
   AlertCircle,
   HelpCircle,
   ShieldAlert,
@@ -140,7 +140,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                   {lang === "en" ? `Starting at ${procedure.startingPrice}` : `Desde ${procedure.startingPrice}`}
                 </span>
                 <span className="text-[9px] text-slate-400 uppercase tracking-widest font-mono mt-1">
-                  {lang === "en" ? "Includes Coordination, Concierge & Hotel" : "Inlcuye Coordinación, Concierge y Hotel"}
+                  {lang === "en" ? "Includes Coordination, Concierge & Hotel" : "Incluye Coordinación, Concierge y Hotel"}
                 </span>
               </div>
 
@@ -223,15 +223,15 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
             
             <div className="space-y-4">
               <span className="text-[#22B8CF] text-xs font-bold tracking-[0.25em] uppercase block">
-                {lang === "en" ? "CORPORATE TRAVEL & HOUSING" : "LOGÍSTICA EXTRANJERA PREMIUM"}
+                {lang === "en" ? "CONCIERGE COORDINATION" : "COORDINACIÓN CONCIERGE"}
               </span>
               <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F172A] uppercase tracking-wider">
                 {lang === "en" ? "Executive Journey Design" : "Coordinación Ejecutiva de Viaje"}
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 tracking-widest uppercase mb-1">
                 {lang === "en" 
-                  ? "Continuous oversight from boarding to check-out" 
-                  : "Supervisión total en cada kilómetro del trayecto transfronterizo"}
+                  ? "From your arrival to a seamless, supported departure" 
+                  : "Desde tu llegada hasta tu salida con total respaldo"}
               </p>
               <div className="h-0.5 w-12 bg-[#164E63] my-3"></div>
               
@@ -248,13 +248,13 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
               
               <div className="space-y-3.5 text-xs">
                 <div className="flex items-start gap-2.5">
-                  <Plane size={15} className="text-[#22B8CF] mt-0.5 shrink-0" />
+                  <Car size={15} className="text-[#22B8CF] mt-0.5 shrink-0" />
                   <div>
                     <strong className="text-[#0F172A] uppercase tracking-wide block text-[10px]">
-                      {lang === "en" ? "Private Transit SUV" : "Transportación Ejecutiva Directa"}
+                      {lang === "en" ? "Private Executive SUV" : "Transportación Ejecutiva Directa"}
                     </strong>
                     <span className="text-slate-500">
-                      {lang === "en" ? "Chauffeured, bicultural security escort" : "Chofer premium bilingüe a las órdenes"}
+                      {lang === "en" ? "Chauffeured, bilingual concierge escort" : "Chofer premium bilingüe a las órdenes"}
                     </span>
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                   <Clock size={15} className="text-[#22B8CF] mt-0.5 shrink-0" />
                   <div>
                     <strong className="text-[#0F172A] uppercase tracking-wide block text-[10px]">
-                      {lang === "en" ? "Continuous bilingual support Desk" : "Escritorio Coordinador Bilingüe"}
+                      {lang === "en" ? "Continuous bilingual support" : "Coordinación Bilingüe Continua"}
                     </strong>
                     <span className="text-slate-500">
                       {lang === "en" ? "Instant coordination with your home registrar" : "Monitoreo constante e intercomunicación instantánea"}

@@ -36,7 +36,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Advanced LASIK Laser Eye Surgery",
       subtitle: "Bicultural Refractive Adjustments in Monterrey's Premier Ophthalmic Clinics",
       overview: "Experience premium, state-of-the-art custom wavefront-guided LASIK laser correction. This treatment adjusts refractive errors such as myopia, hyperopia, and astigmatism with high-precision computer mapping.",
-      executiveCoordination: "Your medical travel is fully curated. Includes private pickup in an executive SUV from domestic terminals or borders, private bilingual chauffeur, and a validated reservation of premium business-grade recovery accommodations in San Pedro Garza García.",
+      executiveCoordination: "Your Monterrey experience is fully arranged. A private bilingual chauffeur in an executive SUV meets you at arrival, managing all local transfers and clinic visits. Premium business-grade recovery accommodations in San Pedro Garza García are pre-reserved. Personalized travel coordination from Texas is available upon request.",
       recoveryOverview: "Vision improvements are typically noticeable within 24 hours. Most patients return to light activities and work with exceptional visual acuity within 1-2 days. Medical eye drop panels and post-evaluations are strictly scheduled.",
       whatsCoordinated: [
         "Preoperative ophthalmic diagnostic mapping and corneal thickness evaluation",
@@ -64,7 +64,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Cirugía Láser Ocular LASIK Avanzada",
       subtitle: "Ajustes Refractivos Biculturales en Clínicas Oftalmológicas de Monterrey",
       overview: "Experimente corrección láser LASIK guiada por mapeo de frente de onda de alta resolución. Este tratamiento corrige errores refractivos como miopía, hipermetropía y astigmatismo con mapeo digital de alta precisión.",
-      executiveCoordination: "Su traslado médico está completamente organizado. Incluye chofer privado bilingüe en camioneta ejecutiva de lujo desde terminales o fronteras, y reservación validada de alojamiento ejecutivo de negocios en San Pedro Garza García.",
+      executiveCoordination: "Su experiencia en Monterrey está completamente coordinada. Un chofer bilingüe privado en camioneta ejecutiva le recibe en su terminal de llegada y gestiona todos los traslados locales y visitas clínicas. Alojamiento ejecutivo de negocios en San Pedro Garza García pre-reservado. Coordinación de viaje personalizada desde Texas disponible bajo solicitud.",
       recoveryOverview: "La mejoría en la agudeza visual se percibe en un periodo de 24 horas. La mayoría de los pacientes regresan a sus actividades ligeras en 1-2 días con gotas oculares protectoras e indicaciones de seguimiento.",
       whatsCoordinated: [
         "Mapeo de diagnóstico oftálmico preoperatorio y evaluación de espesor corneal",
@@ -97,7 +97,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Laparoscopic Gallbladder Removal",
       subtitle: "Minimally Invasive Gallstone Solution in High-End Certified Surgical Centers",
       overview: "Avoid painful biliary complications with standard laparoscopic cholecystectomy. Using microscopic incisions and camera-guided precision, board-certified general surgeons remove the gallbladder safely under general anesthesia.",
-      executiveCoordination: "Curated end-to-end. We manage executive airport pickup, secure transport in modern luxury vehicles, private bilingual concierge escort, and premium recovery accommodations in the elite municipal zone of San Pedro Garza García.",
+      executiveCoordination: "Curated within Monterrey, end-to-end. We manage your airport reception, secure transport in executive vehicles, private bilingual concierge escort, and premium recovery accommodations in the elite zone of San Pedro Garza García. Flexible travel arrangements from Texas are available upon request.",
       recoveryOverview: "Laparoscopic techniques offer rapid physical turnaround. Patients typically stay one evening in the clinical facility and transition to the luxury hotel recovery room for 2-3 additional days before returning to Texas.",
       whatsCoordinated: [
         "Comprehensive screening panels, clinical chemistry, and pre-anesthesia evaluation",
@@ -125,7 +125,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Cirugía de Vesícula por Laparoscopia",
       subtitle: "Extirpación de Vesícula Mínimamente Invasiva en Clínicas de Alta Seguridad",
       overview: "Evite complicaciones de cólico biliar con colecistectomía laparoscópica. A través de incisiones milimétricas y guía por cámara, cirujanos certificados extirpan la vesícula biliar de forma rápida y segura.",
-      executiveCoordination: "Planificación de inicio a fin. Coordinamos chofer ejecutivo bilingüe privado, traslados clínicos seguros y estancia en suite de alojamiento ejecutivo de negocios en San Pedro Garza García, la zona de mayor plusvalía del país.",
+      executiveCoordination: "Coordinación completa dentro de Monterrey. Gestionamos su recepción en aeropuerto, traslados clínicos en vehículo ejecutivo privado, acompañamiento bilingüe y estancia en suite ejecutiva en San Pedro Garza García. Arreglos de viaje flexibles desde Texas disponibles a petición.",
       recoveryOverview: "La técnica laparoscópica ofrece la recuperación más rápida. Generalmente se prescribe una noche de hospitalización para monitoreo clínico estricto y 2-3 días de descanso en hotel corporativo antes del viaje de regreso.",
       whatsCoordinated: [
         "Panel completo de estudios preoperatorios de sangre, ultrasonido y valoración pre-anestésica",
@@ -158,7 +158,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Laparoscopic Nissen Anti-Reflux Surgery",
       subtitle: "Permanent GERD and Hiatal Hernia Relief by Board-Certified Specialists",
       overview: "Put an end to severe gastroesophageal reflux disease (GERD) and chronic heartburn. The laparoscopic Nissen fundoplication wraps the upper curve of the stomach around the lower esophagus to reinforce the lower esophageal sphincter.",
-      executiveCoordination: "Every logistical aspect is covered. Enjoy direct executive ground or terminal transit, bilingual interpreter services during clinical check-ins, and secure luxury corporate recovery stays in San Pedro Garza García.",
+      executiveCoordination: "Every in-Monterrey logistical aspect is arranged. Enjoy direct executive ground transfers, bilingual interpreter services during clinical check-ins, and secure luxury corporate recovery stays in San Pedro Garza García. Tailored travel assistance from Texas is available upon request.",
       recoveryOverview: "Surgical soreness resolves rapidly. Most patients transition back to solid meals following a strictly configured liquid-to-soft diet plan during 2 to 3 weeks. Liquid panels and dietary plans are tailored.",
       whatsCoordinated: [
         "Preoperative imaging, esophageal manometry coordination, and cardiac clearances",
@@ -186,7 +186,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Cirugía Antirreflujo Nissen Laparoscópica",
       subtitle: "Alivio Permanente para ERGE y Hernia Hiatal con Especialistas Certificados",
       overview: "Ponga fin a la Enfermedad por Reflujo Gastroesofágico (ERGE) y la acidez crónica. La funduplicatura tipo Nissen refuerza el esfínter esofágico inferior doblando la parte superior de la cámara gástrica.",
-      executiveCoordination: "Toda la de logística de viaje corporativa está cubierta: transportación ejecutiva en camioneta equipada, atención bilingüe dedicada y hospedaje en distritos de alojamiento ejecutivo de negocios en San Pedro Garza García.",
+      executiveCoordination: "Toda la logística dentro de Monterrey está coordinada: transportación ejecutiva en camioneta privada, atención bilingüe dedicada y hospedaje en alojamiento ejecutivo de negocios en San Pedro Garza García. Asistencia logística personalizada desde Texas disponible bajo solicitud.",
       recoveryOverview: "La recuperación de heridas pequeñas de laparoscopia es muy rápida. Se prescribe una dieta estricta de líquidos a papillas y alimentos blandos durante 2 a 3 semanas para permitir una curación correcta.",
       whatsCoordinated: [
         "Coordinación de manometría esofágica preoperatoria, estudios de imagen y valoraciones clínicas",
@@ -219,7 +219,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Laparoscopic Hysterectomy Coordination",
       subtitle: "Minimally Invasive Guided Gynecological Surgical Excellence",
       overview: "Obtain clinical intervention for uterine fibroids, severe endometriosis, or chronic pelvic pain. Laparoscopic techniques utilize standard micro-incisions to facilitate uterine removal, meaning reduced pain and faster restoration of energy.",
-      executiveCoordination: "We optimize your comfort throughout the valley. Private executive security transit is scheduled, paired with vetted bilingual guides and lodging in the most prestigious and safest residential hotels in San Pedro Garza García.",
+      executiveCoordination: "Your entire Monterrey stay is optimized. Private executive transit is scheduled, paired with vetted bilingual guides and lodging in the most prestigious residential hotels in San Pedro Garza García. Personalized travel coordination from Texas is available upon request.",
       recoveryOverview: "While traditional open procedures require several weeks, laparoscopic patients are up walking safely the next day. A rest period of 7-14 days at a controlled pace is typically recommended before returning to Texas.",
       whatsCoordinated: [
         "Preoperative gynecological ultrasound checks, clinical panels, and pre-op clearances",
@@ -247,7 +247,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Histerectomía Laparoscópica Ginecológica",
       subtitle: "Mínima Invasión para Alivio Ginecológico con Ginecólogos Certificados",
       overview: "Encuentre solución definitiva a miomas uterinos, endometriosis severa o dolor pélvico crónico. La técnica laparoscópica utiliza incisiones milimétricas para extirpar el útero, reduciendo el dolor y acelerando la ganancia de energía.",
-      executiveCoordination: "Minimizamos el estrés logístico en todo momento. Su itinerario incluye chofer bilingüe en camioneta ejecutiva de lujo, acompañamiento clínico continuo y estancia en suite de alojamiento corporativo premium en San Pedro.",
+      executiveCoordination: "Minimizamos el estrés logístico dentro de Monterrey. Su itinerario incluye chofer bilingüe en camioneta ejecutiva, acompañamiento clínico continuo y estancia en suite corporativa premium en San Pedro. Coordinación ejecutiva de viaje desde Texas disponible bajo solicitud.",
       recoveryOverview: "A diferencia de la técnica abierta clásica, con la laparoscopia se camina sin dolor al día siguiente del egreso. Se prescribe reposo moderado de 7 a 14 días para una curación óptima antes de retomar labores cotidianas.",
       whatsCoordinated: [
         "Ultrasonido ginecológico preoperatorio, analítica sanguínea y valoración de riesgo quirúrgico",
@@ -280,7 +280,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Bespoke Aesthetic Rhinoplasty",
       subtitle: "Reconstructive and Cosmetic Nasal Design by Highly Skilled Plastic Surgeons",
       overview: "Achieve facial harmony and improved nasal airway function. Specialized board-certified plastic registry surgeons customize rhinoplasty techniques to refine the nasal bridge, tip, and correct internal septal deviations.",
-      executiveCoordination: "Every travel asset is pre-arranged. A dedicated private executive SUV with bilingual driver manages all airport and clinic transits, while your recovery occurs in a boutique hotel in secure San Pedro districts.",
+      executiveCoordination: "Every Monterrey logistics asset is pre-arranged. A dedicated private executive SUV with bilingual driver manages all local transfers and clinic visits, while your recovery occurs in a boutique hotel in secure San Pedro districts. Flexible travel coordination from Texas is available upon request.",
       recoveryOverview: "Swelling and nasal splints are maintained for 7 days. Most patients resume low-impact work with minimal discomfort within a week. Safe airway breathing returns steadily.",
       whatsCoordinated: [
         "Preoperative facial imaging, virtual diagnostic simulations, and septal evaluation",
@@ -308,7 +308,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Rinoplastia Estética y Funcional",
       subtitle: "Diseño Nasal Reconstructivo y Armonía Facial con Cirujanos Plásticos Licenciados",
       overview: "Logre una excelente armonía en su rostro y optimice su respiración. Cirujanos plásticos certificados personalizan la técnica quirúrgica para definir el perfil nasal, punta nasal y corregir desviaciones de tabique.",
-      executiveCoordination: "Todo resuelto de antemano. Camioneta ejecutiva privada con chofer bilingüe para todos los traslados programados y estancia de recuperación en hotel boutique de negocios de San Pedro Garza García.",
+      executiveCoordination: "Todo lo de Monterrey resuelto de antemano. Camioneta ejecutiva privada con chofer bilingüe para todos los traslados locales programados y estancia de recuperación en hotel boutique de negocios en San Pedro Garza García. Coordinación concierge de viaje desde Texas disponible bajo solicitud.",
       recoveryOverview: "La férula postoperatoria se retira en el consultorio al séptimo día. La mayoría de los pacientes viajan de regreso y regresan a labores de oficina en 7 días con mínimas molestias y moretones mínimos.",
       whatsCoordinated: [
         "Diagnóstico preoperatorio de simulación digital facial y análisis de la vía aérea nasal",
@@ -341,7 +341,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Premium Dental Smile Makeover",
       subtitle: "Full Restorative Aesthetics with Advanced German Zirconia Crowns",
       overview: "Transform your smile with computerized ceramic dentistry. This comprehensive package covers 8 high-density premium German zirconia crowns or veneers, color-matched and crafted via high-precision CAD/CAM laboratories.",
-      executiveCoordination: "Relax while we guide your schedule. High-grade private executive SUV transits, dedicated bilingual driver check-in assistance, and premium recovery hotel suites in San Pedro Garza García are prepared.",
+      executiveCoordination: "Relax while we arrange every Monterrey detail. High-grade private executive SUV transfers, dedicated bilingual driver assistance, and premium recovery hotel suites in San Pedro Garza García are pre-arranged. Personalized travel coordination from Texas is available upon request.",
       recoveryOverview: "Since dental makeovers are non-invasive, soreness is highly mild. Patients enjoy immediate aesthetic pride. Direct soft meal guidelines are recommended for the first 3-5 days.",
       whatsCoordinated: [
         "Preoperative bite assessment, computerized digital mock-up, and clinical x-ray panels",
@@ -369,7 +369,7 @@ export const proceduresData: ProcedureData[] = [
       title: "Diseño de Sonrisa Dental Premium",
       subtitle: "Rehabilitación Estética de Alta Gama con Coronas de Zirconia Alemana",
       overview: "Renueve por completo su sonrisa con odontología cerámica computarizada. Este paquete integral cubre 8 coronas o carillas de zirconia alemana de alta densidad, fabricadas con impresores CAD/CAM de máxima precisión.",
-      executiveCoordination: "Descanse mientras programamos sus citas. Preparación integral con traslados clínicos en camionetas ejecutivas modernas y hospedaje en suites de negocios preferenciales en San Pedro.",
+      executiveCoordination: "Descanse mientras coordinamos cada detalle en Monterrey. Traslados clínicos en camioneta ejecutiva privada y hospedaje en suites de negocios preferenciales en San Pedro Garza García, todo pre-organizado. Coordinación de viaje personalizada desde Texas disponible bajo solicitud.",
       recoveryOverview: "Es un procedimiento de odontología mínimamente molesto. Tendrá mínima sensibilidad inicial, disfrutando de un cambio estético inmediato. Se aconseja alimentos suaves por los primeros 3 a 5 días.",
       whatsCoordinated: [
         "Evaluación preoperatoria de mordida, diagnóstico 3D digital interactivo y placas de rayos X",

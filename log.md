@@ -2544,5 +2544,105 @@ Replaced `<select>` with `<button>` that displays the language to switch **to**:
 ## BUILD
 ✅ 0 errors · 0 warnings · built in 8.25s
 
+---
 
+---
+
+# Phase 11 — Pricing & Logistics Messaging Update
+**Date**: May 25, 2026
+**Scope**: Content-only update — no layout, typography, or visual identity changes
+**Direction**: Remove flight-included language; reposition logistics as Monterrey-side coordination with flexible travel arrangements available separately
+
+---
+
+## Business Rationale
+
+Flights are no longer included in standard packages. The service is being repositioned as a premium personalized medical concierge experience where patients maintain full flexibility over their preferred airline, schedule, and miles programs. Language must never imply flights are auto-included; instead it should emphasize personalization and flexibility.
+
+---
+
+## Files Modified
+
+| File | Change |
+|------|--------|
+| `src/pages/Home.tsx` | Reframed exclusion item: "International Airline Flights" → "Flexible Travel Arrangements" |
+| `src/data/procedures.ts` | Updated all 12 `executiveCoordination` strings (6 EN + 6 ES) |
+| `src/pages/ProcedureDetail.tsx` | Fixed "boarding" ref, replaced Plane icon → Car, removed "Desk" label, fixed typo |
+
+---
+
+## Detailed Changes
+
+### 1. `src/pages/Home.tsx` — Package Scope Exclusions
+
+**Changed**: The exclusion list item for flights was reframed from a negative "not included" statement to a positive flexibility/personalization message.
+
+- EN Title: `"International Airline Flights"` → `"Flexible Travel Arrangements"`
+- ES Title: `"Boletos de Avión Internacionales"` → `"Arreglos de Viaje Flexibles"`
+- EN Description: `"Commercial flights or private jet charter rates (coordinated separately based on timing)."` → `"We prioritize your travel flexibility. Patients choose their preferred airline, schedule, and miles program. Personalized travel coordination is available upon request."`
+- ES Description: `"Boletos aéreos de aerolíneas comerciales..."` → `"Priorizamos su flexibilidad de viaje. Cada paciente elige su aerolínea, horario y programa de millas preferido. Coordinación de viaje personalizada disponible bajo solicitud."`
+
+**UX Rationale**: The previous wording treated flights as a negative exclusion. The new wording frames it as a premium benefit (choice, flexibility, miles programs) consistent with the luxury concierge positioning.
+
+### 2. `src/data/procedures.ts` — All 6 Procedures, EN + ES `executiveCoordination`
+
+All 12 fields were updated to:
+1. Clarify the coordination is Monterrey-side ("within Monterrey", "your Monterrey experience", "inside Monterrey")
+2. Add a closing line about travel coordination from Texas being available upon request
+
+**Pattern applied (EN)**:
+- Old: `"Your medical travel is fully curated. Includes private pickup..."` (implies full travel coverage)
+- New: `"Your Monterrey experience is fully arranged. [...] Personalized travel coordination from Texas is available upon request."`
+
+**Approved replacement phrases used**:
+- EN: "Personalized travel coordination from Texas is available upon request"
+- EN: "Flexible travel arrangements from Texas are available upon request"
+- EN: "Tailored travel assistance from Texas is available upon request"
+- ES: "Coordinación de viaje personalizada desde Texas disponible bajo solicitud"
+- ES: "Arreglos de viaje flexibles desde Texas disponibles a petición"
+- ES: "Asistencia logística personalizada desde Texas disponible bajo solicitud"
+- ES: "Coordinación concierge de viaje desde Texas disponible bajo solicitud"
+
+### 3. `src/pages/ProcedureDetail.tsx` — Language + Icon Fixes
+
+| Element | Before | After |
+|---------|--------|-------|
+| Section eyebrow | `"CORPORATE TRAVEL & HOUSING"` | `"CONCIERGE COORDINATION"` |
+| ES eyebrow | `"LOGÍSTICA EXTRANJERA PREMIUM"` | `"COORDINACIÓN CONCIERGE"` |
+| Sub-description | `"Continuous oversight from boarding to check-out"` | `"From your arrival to a seamless, supported departure"` |
+| ES sub-description | `"Supervisión total en cada kilómetro..."` | `"Desde tu llegada hasta tu salida con total respaldo"` |
+| Icon (SUV item) | `Plane` (misleading — implied aircraft) | `Car` (accurate — ground transport) |
+| SUV label | `"Private Transit SUV"` | `"Private Executive SUV"` |
+| SUV detail | `"bicultural security escort"` | `"bilingual concierge escort"` |
+| Support label | `"Continuous bilingual support Desk"` | `"Continuous bilingual support"` |
+| ES support label | `"Escritorio Coordinador Bilingüe"` | `"Coordinación Bilingüe Continua"` |
+| Pricing note typo | `"Inlcuye"` | `"Incluye"` ✅ |
+
+**UX Rationale**:
+- `Plane` icon next to "Private Transit SUV" created false visual implication that flights were part of the coordination package. `Car` icon is accurate and transparent.
+- "boarding to check-out" phrasing implied aircraft boarding. New wording is clearly about the Monterrey stay.
+- "Desk" was flagged in Phase 7 as corporate jargon. Now fully removed.
+- "CORPORATE TRAVEL & HOUSING" sounded like a large corporate operation. "CONCIERGE COORDINATION" aligns with the boutique brand.
+
+---
+
+## Pricing Display Review (Task 5)
+
+- All "Starting at" labels remain unchanged ✅
+- EN: `Starting at $X USD` · ES: `Desde $X USD` — consistent across all 6 procedures ✅
+- Pricing note: "Includes Coordination, Concierge & Hotel" — accurate and flight-free ✅
+- No contradictory logistics messaging found in App.tsx footer or top bar ✅
+
+---
+
+## Mobile + Responsive Check (Task 6)
+
+- Longer concierge descriptions in `executiveCoordination` render within existing `font-sans text-xs sm:text-sm leading-relaxed` containers — no overflow ✅
+- The exclusion item update in Home.tsx (longer EN/ES description) flows correctly in its `text-[11px] sm:text-xs` container ✅
+- No spacing breaks introduced ✅
+
+---
+
+## BUILD
+✅ 0 errors · 0 warnings · built in 12.84s
 

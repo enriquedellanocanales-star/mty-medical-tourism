@@ -583,12 +583,12 @@ export default function Home({ lang }: HomeProps) {
                     <span className="w-5 h-5 rounded-none bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">&times;</span>
                     <div>
                       <strong className="text-[#0F172A] uppercase tracking-wider block text-[11px] sm:text-xs">
-                        <span className="lang-en">International Airline Flights</span>
-                        <span className="lang-es font-sans">Boletos de Avión Internacionales</span>
+                        <span className="lang-en">Flexible Travel Arrangements</span>
+                        <span className="lang-es font-sans">Arreglos de Viaje Flexibles</span>
                       </strong>
                       <span className="text-[#64748B] text-[11px] sm:text-xs font-normal font-sans">
-                        <span className="lang-en">Commercial flights or private jet charter rates (coordinated separately based on timing).</span>
-                        <span className="lang-es">Boletos aéreos de aerolíneas comerciales o jets privados desde aeropuertos de Texas.</span>
+                        <span className="lang-en">We prioritize your travel flexibility. Patients choose their preferred airline, schedule, and miles program. Personalized travel coordination is available upon request.</span>
+                        <span className="lang-es">Priorizamos su flexibilidad de viaje. Cada paciente elige su aerolínea, horario y programa de millas preferido. Coordinación de viaje personalizada disponible bajo solicitud.</span>
                       </span>
                     </div>
                   </li>
