@@ -70,6 +70,69 @@ const SafeImage = ({
   );
 };
 
+// Auto-rotating image carousel — no controls, no dots, smooth CSS fade
+const carouselSlides = [
+  {
+    src: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80",
+    labelEn: "Private Hospital Infrastructure",
+    labelEs: "Infraestructura Hospitalaria Privada",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+    labelEn: "Premium Patient Facilities",
+    labelEs: "Instalaciones de Alto Nivel",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80",
+    labelEn: "Monterrey Metropolitan Area",
+    labelEs: "Área Metropolitana de Monterrey",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80",
+    labelEn: "Executive Recovery Accommodations",
+    labelEs: "Alojamiento Ejecutivo de Recuperación",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80",
+    labelEn: "Private Recovery Suite",
+    labelEs: "Suite de Recuperación Privada",
+  },
+];
+
+function ImageCarousel({ lang }: { lang: "en" | "es" }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % carouselSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative overflow-hidden aspect-[16/10] w-full bg-[#164E63]/30">
+      {carouselSlides.map((slide, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 transition-opacity duration-1000"
+          style={{ opacity: i === active ? 1 : 0 }}
+        >
+          <img
+            src={slide.src}
+            alt={lang === "en" ? slide.labelEn : slide.labelEs}
+            className="w-full h-full object-cover grayscale opacity-75"
+            referrerPolicy="no-referrer"
+            loading="lazy"
+          />
+          <div className="absolute bottom-2 left-2 bg-[#0F172A]/90 border border-[#22B8CF]/30 text-white font-mono text-[8px] uppercase px-2 py-0.5 tracking-widest pointer-events-none">
+            {lang === "en" ? slide.labelEn : slide.labelEs}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 interface HomeProps {
   lang: "en" | "es";
 }
@@ -446,21 +509,9 @@ export default function Home({ lang }: HomeProps) {
                 </p>
               </div>
 
-              {/* Recovery Suites Showcase Frame */}
-              <div className="lg:col-span-5 w-full flex justify-center bg-black/20 border border-white/10 p-2 shadow-xl">
-                <div className="relative overflow-hidden aspect-[16/10] w-full bg-[#164E63]/30 group">
-                  <SafeImage 
-                    id="img-recovery"
-                    src="assets/images/procedures/recovery-suite.jpg" 
-                    fallback="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=600&q=80" 
-                    alt="Bespoke luxury business recovery bedroom with medical logistics support"
-                    className="w-full h-full object-cover grayscale opacity-75 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-2 left-2 bg-[#0F172A]/90 border border-[#22B8CF]/40 text-white font-mono text-[9px] uppercase px-2 py-0.5 tracking-widest">
-                    <span className="lang-en font-sans text-[8px]">RECOVERY SUITES</span>
-                    <span className="lang-es">ALBERGUE DE CONVENIO</span>
-                  </div>
-                </div>
+              {/* Auto-rotating Image Carousel */}
+              <div className="lg:col-span-5 w-full bg-black/20 border border-white/10 p-2 shadow-xl">
+                <ImageCarousel lang={lang} />
               </div>
 
             </div>

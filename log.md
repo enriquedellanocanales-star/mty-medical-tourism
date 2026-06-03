@@ -2646,3 +2646,109 @@ All 12 fields were updated to:
 ## BUILD
 ✅ 0 errors · 0 warnings · built in 12.84s
 
+---
+
+---
+
+# Phase 12 — Why Monterrey Carousel + Footer Social Links
+**Date**: June 3, 2026
+**Scope**: Two additive UI enhancements — no layout, typography, or branding changes
+**Direction**: Strengthen visual trust signals in the Why Monterrey section; add social legitimacy anchors to footer
+
+---
+
+## TASK 1 — Image Carousel (Why Monterrey section)
+
+### Rationale
+The static single-image recovery box was replaced with a 5-slide auto-rotating photo carousel. The carousel reinforces the four trust pillars of the section: medical infrastructure, modern city environment, premium hospitality, and comfortable recovery. Aligns with Four Seasons / Aman Resorts editorial style — photography-forward, no UI chrome.
+
+### Implementation
+
+**Component**: `ImageCarousel` — defined as a standalone function component directly above the `Home` export in `src/pages/Home.tsx`. Self-contained state + effect, no new dependencies.
+
+**Slides (order)**:
+| # | Subject | EN Label | ES Label |
+|---|---------|----------|----------|
+| 1 | Hospital Exterior | Private Hospital Infrastructure | Infraestructura Hospitalaria Privada |
+| 2 | Hospital Lobby / Corridor | Premium Patient Facilities | Instalaciones de Alto Nivel |
+| 3 | Monterrey Skyline (night) | Monterrey Metropolitan Area | Área Metropolitana de Monterrey |
+| 4 | Partner Hotel Room | Executive Recovery Accommodations | Alojamiento Ejecutivo de Recuperación |
+| 5 | Private Recovery Suite | Private Recovery Suite | Suite de Recuperación Privada |
+
+**Behavior**:
+- Auto-rotates every **5 seconds** via `setInterval` in `useEffect` (cleanup on unmount)
+- **Smooth 1-second CSS fade** via `transition-opacity duration-1000` + `style={{ opacity }}`
+- No arrows, no pagination dots, no touch handlers, no manual controls
+- Micro-label overlay: `bottom-2 left-2`, `font-mono text-[8px]`, `bg-[#0F172A]/90 border border-[#22B8CF]/30` — subtle, editorial
+- Images: `grayscale opacity-75` to match existing luxury monochrome aesthetic
+- `loading="lazy"` on all carousel images to avoid blocking initial render
+
+**Code pattern**:
+```tsx
+function ImageCarousel({ lang }: { lang: "en" | "es" }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setActive((p) => (p + 1) % slides.length), 5000);
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <div className="relative overflow-hidden aspect-[16/10]">
+      {slides.map((s, i) => (
+        <div key={i} className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: i === active ? 1 : 0 }}>
+          <img ... />
+          <div>{/* micro-label */}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+**Replacement**: The static `SafeImage` frame (`id="img-recovery"`) and its `RECOVERY SUITES` overlay were removed. The `lg:col-span-5` container now renders `<ImageCarousel lang={lang} />`.
+
+### Mobile behavior
+- `aspect-[16/10]` maintains consistent ratio across all breakpoints
+- All 5 slides are absolutely positioned within the container — no reflow or layout shift during rotation
+- Carousel container inherits `w-full` — adapts from full-width mobile stack to 5/12 desktop column
+
+---
+
+## TASK 2 — Social Media Links (Footer)
+
+### Rationale
+Visitors from paid traffic need quick, passive trust signals. Social links allow potential patients to independently verify brand legitimacy before converting. Placement is minimal and anchored to the Brand column — not a prominent marketing widget.
+
+### Implementation
+
+**Placement**: Column 1 (Brand + Location) of the footer, below the operational region lines.
+
+**Icons**:
+| Channel | Icon | Size | Link |
+|---------|------|------|------|
+| Facebook | `lucide-react <Facebook />` | `size={13} strokeWidth={1.5}` | `facebook.com/mtymedical` |
+| Instagram | `lucide-react <Instagram />` | `size={13} strokeWidth={1.5}` | `instagram.com/mtymedical` |
+| WhatsApp | Inline SVG (official path) | `13×13` | `wa.me/15125550199` |
+
+**Styling**:
+- Default: `text-white/25` — barely visible, non-intrusive
+- Hover: `text-white/70` — subtle reveal, not loud
+- Transition: `duration-200`
+- Row: `flex items-center gap-4` — compact horizontal strip
+- All have `aria-label` for accessibility
+
+**Note on WhatsApp icon**: `lucide-react` does not include a WhatsApp icon. Inline SVG using the official WhatsApp path vector was used for brand accuracy. Same `currentColor` pattern as lucide icons.
+
+---
+
+## FILES MODIFIED
+
+| File | Change |
+|------|--------|
+| `src/pages/Home.tsx` | Added `ImageCarousel` component + `carouselSlides` array; replaced static recovery image with `<ImageCarousel lang={lang} />` |
+| `src/App.tsx` | Added `Facebook`, `Instagram` to lucide imports; added social icon row in footer Column 1 |
+
+---
+
+## BUILD
+✅ 0 errors · 0 warnings · built in 23.05s
+
