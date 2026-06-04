@@ -73,27 +73,27 @@ const SafeImage = ({
 // Auto-rotating image carousel — no controls, no dots, smooth CSS fade
 const carouselSlides = [
   {
-    src: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80",
+    src: "/assets/images/Hospital.png",
     labelEn: "Private Hospital Infrastructure",
     labelEs: "Infraestructura Hospitalaria Privada",
   },
   {
-    src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
-    labelEn: "Premium Patient Facilities",
-    labelEs: "Instalaciones de Alto Nivel",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80",
+    src: "/assets/images/Fundidora-sky.png",
     labelEn: "Monterrey Metropolitan Area",
     labelEs: "Área Metropolitana de Monterrey",
   },
   {
-    src: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80",
+    src: "/assets/images/Lobby.png",
+    labelEn: "Premium Patient Facilities",
+    labelEs: "Instalaciones de Alto Nivel",
+  },
+  {
+    src: "/assets/images/Hotel.png",
     labelEn: "Executive Recovery Accommodations",
     labelEs: "Alojamiento Ejecutivo de Recuperación",
   },
   {
-    src: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80",
+    src: "/assets/images/habitacion.png",
     labelEn: "Private Recovery Suite",
     labelEs: "Suite de Recuperación Privada",
   },
@@ -120,8 +120,7 @@ function ImageCarousel({ lang }: { lang: "en" | "es" }) {
           <img
             src={slide.src}
             alt={lang === "en" ? slide.labelEn : slide.labelEs}
-            className="w-full h-full object-cover grayscale opacity-75"
-            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover opacity-90"
             loading="lazy"
           />
           <div className="absolute bottom-2 left-2 bg-[#0F172A]/90 border border-[#22B8CF]/30 text-white font-mono text-[8px] uppercase px-2 py-0.5 tracking-widest pointer-events-none">
