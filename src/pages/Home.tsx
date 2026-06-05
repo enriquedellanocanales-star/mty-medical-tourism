@@ -240,7 +240,7 @@ export default function Home({ lang }: HomeProps) {
       `*Notes:* ${formData.clinicalNotes || "—"}`;
 
     window.open(
-      `https://wa.me/15125550199?text=${encodeURIComponent(waMsg)}`,
+      `https://wa.me/528110487334?text=${encodeURIComponent(waMsg)}`,
       "_blank"
     );
 

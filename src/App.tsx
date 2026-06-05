@@ -288,7 +288,7 @@ function AppContent() {
                   <Instagram size={13} strokeWidth={1.5} />
                 </a>
                 <a
-                  href={`https://wa.me/15125550199`}
+                  href={`https://wa.me/528110487334`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -310,7 +310,7 @@ function AppContent() {
               <ul className="space-y-3 font-sans">
                 <li>
                   <a
-                    href={`https://wa.me/15125550199?text=${encodeURIComponent(
+                    href={`https://wa.me/528110487334?text=${encodeURIComponent(
                       lang === "en"
                         ? "Hello, I'd like to learn more about MTY Medical coordination services."
                         : "Hola, me gustaría obtener información sobre los servicios de coordinación médica en MTY Medical."
@@ -395,7 +395,7 @@ function AppContent() {
       {/* PERSISTENT FLOATABLE: WhatsApp widget */}
       <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2">
         <a 
-          href={`https://wa.me/15125550199?text=${encodeURIComponent(
+          href={`https://wa.me/528110487334?text=${encodeURIComponent(
             lang === "en" 
               ? "Hello, I'd like to learn more about MTY Medical coordination services." 
               : "Hola, me gustaría obtener información sobre los servicios de coordinación médica en MTY Medical."
