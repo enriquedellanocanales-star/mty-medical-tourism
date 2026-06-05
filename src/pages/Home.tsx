@@ -192,13 +192,60 @@ export default function Home({ lang }: HomeProps) {
     });
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1200);
+
+    const procNames: Record<string, string> = {
+      Laparoscopic_Gallbladder: "Laparoscopic Gallbladder",
+      Advanced_LASIK: "Advanced LASIK",
+      Rhinoplasty: "Rhinoplasty",
+      Smile_Makeover: "German Zirconia Smile Makeover",
+      Advanced_Reflux: "Advanced Reflux Correction",
+      Laparoscopic_Hysterectomy: "Laparoscopic Hysterectomy",
+    };
+
+    // 1. Email via Formspree — replace YOUR_FORMSPREE_ID with your form ID from formspree.io
+    try {
+      await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          phone: formData.phone,
+          email: formData.email,
+          location: formData.texasLocation,
+          procedure: procNames[formData.procedure] || formData.procedure,
+          timeline: formData.timeframe,
+          contact_method: formData.contactMethod,
+          hsa_planning: formData.hsaPlanning,
+          medical_files: formData.medicalFiles.join(", ") || "—",
+          notes: formData.clinicalNotes || "—",
+        }),
+      });
+    } catch {
+      // WhatsApp is the live primary channel — continue even if email fails
+    }
+
+    // 2. Open WhatsApp with pre-filled patient summary (sent from patient's device to MTY Medical)
+    const waMsg =
+      `🏥 *MTY Medical — New Patient Inquiry*\n\n` +
+      `*Name:* ${formData.fullName}\n` +
+      `*Phone:* ${formData.phone}\n` +
+      `*Email:* ${formData.email}\n` +
+      `*Location:* ${formData.texasLocation}\n` +
+      `*Procedure:* ${procNames[formData.procedure] || formData.procedure || "—"}\n` +
+      `*Timeline:* ${formData.timeframe || "—"}\n` +
+      `*Contact via:* ${formData.contactMethod}\n` +
+      `*Notes:* ${formData.clinicalNotes || "—"}`;
+
+    window.open(
+      `https://wa.me/15125550199?text=${encodeURIComponent(waMsg)}`,
+      "_blank"
+    );
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const resetForm = () => {
@@ -1249,16 +1296,36 @@ export default function Home({ lang }: HomeProps) {
                         </select>
                       </div>
 
-                      <div className="pt-4 flex justify-end">
-                        <button 
-                          type="button" 
-                          onClick={handleNextStep}
-                          disabled={!formData.fullName || !formData.phone || !formData.email || !formData.texasLocation}
-                          className="bg-[#22B8CF] hover:bg-[#22B8CF]/90 text-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed font-extrabold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
-                        >
-                          <span className="lang-en flex items-center gap-1">Next Step <ChevronRight size={13} /></span>
-                          <span className="lang-es font-sans flex items-center gap-1">Siguiente <ChevronRight size={13} /></span>
-                        </button>
+                      <div className="pt-4 space-y-2">
+                        {/* Validation hints — only shown once the user starts filling */}
+                        {(formData.fullName || formData.phone || formData.email || formData.texasLocation) &&
+                          (!formData.fullName || !formData.phone || !formData.email || !formData.texasLocation) && (
+                          <div className="text-[10px] text-amber-400/75 font-sans leading-relaxed space-y-0.5 text-right">
+                            {!formData.fullName && (
+                              <p><span className="lang-en">· Full name is required</span><span className="lang-es font-sans">· Nombre completo requerido</span></p>
+                            )}
+                            {!formData.phone && (
+                              <p><span className="lang-en">· Phone number is required</span><span className="lang-es font-sans">· Número de teléfono requerido</span></p>
+                            )}
+                            {!formData.email && (
+                              <p><span className="lang-en">· Email address is required</span><span className="lang-es font-sans">· Correo electrónico requerido</span></p>
+                            )}
+                            {!formData.texasLocation && (
+                              <p><span className="lang-en">· Select your location to continue</span><span className="lang-es font-sans">· Selecciona tu ciudad para continuar</span></p>
+                            )}
+                          </div>
+                        )}
+                        <div className="flex justify-end">
+                          <button 
+                            type="button" 
+                            onClick={handleNextStep}
+                            disabled={!formData.fullName || !formData.phone || !formData.email || !formData.texasLocation}
+                            className="bg-[#22B8CF] hover:bg-[#22B8CF]/90 text-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed font-extrabold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
+                          >
+                            <span className="lang-en flex items-center gap-1">Next Step <ChevronRight size={13} /></span>
+                            <span className="lang-es font-sans flex items-center gap-1">Siguiente <ChevronRight size={13} /></span>
+                          </button>
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -1446,29 +1513,51 @@ export default function Home({ lang }: HomeProps) {
                         </label>
                       </div>
 
-                      <div className="pt-4 flex justify-between items-center font-sans">
-                        <button 
-                          type="button" 
-                          onClick={handlePrevStep}
-                          className="border border-white/20 hover:border-white/50 text-white font-bold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
-                        >
-                          <span className="lang-en">Back</span>
-                          <span className="lang-es font-sans">Atrás</span>
-                        </button>
-                        <button 
-                          type="submit" 
-                          disabled={isSubmitting || !formData.contactMethod || !formData.termsAccepted}
-                          className="bg-[#22B8CF] hover:bg-[#22B8CF]/90 text-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed font-extrabold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
-                        >
-                          {isSubmitting ? (
-                            <span className="lang-en">Securing link...</span>
-                          ) : (
-                            <>
-                              <span className="lang-en">Submit Intake Plan</span>
-                              <span className="lang-es font-sans">Enviar Expediente</span>
-                            </>
-                          )}
-                        </button>
+                      <div className="pt-4 space-y-2 font-sans">
+                        {/* Validation hints — always visible on Step 3 if anything is missing */}
+                        {(!formData.contactMethod || !formData.termsAccepted) && (
+                          <div className="text-[10px] text-amber-400/75 font-sans leading-relaxed space-y-0.5 text-right">
+                            {!formData.contactMethod && (
+                              <p>
+                                <span className="lang-en">· Select a preferred contact method above</span>
+                                <span className="lang-es font-sans">· Elige tu método de contacto preferido</span>
+                              </p>
+                            )}
+                            {!formData.termsAccepted && (
+                              <p>
+                                <span className="lang-en">· Accept the coordination terms to submit</span>
+                                <span className="lang-es font-sans">· Acepta los términos de coordinación para enviar</span>
+                              </p>
+                            )}
+                          </div>
+                        )}
+                        <div className="flex justify-between items-center">
+                          <button 
+                            type="button" 
+                            onClick={handlePrevStep}
+                            className="border border-white/20 hover:border-white/50 text-white font-bold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
+                          >
+                            <span className="lang-en">Back</span>
+                            <span className="lang-es font-sans">Atrás</span>
+                          </button>
+                          <button 
+                            type="submit" 
+                            disabled={isSubmitting || !formData.contactMethod || !formData.termsAccepted}
+                            className="bg-[#22B8CF] hover:bg-[#22B8CF]/90 text-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed font-extrabold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
+                          >
+                            {isSubmitting ? (
+                              <>
+                                <span className="lang-en">Sending...</span>
+                                <span className="lang-es font-sans">Enviando...</span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="lang-en">Submit &amp; Open WhatsApp</span>
+                                <span className="lang-es font-sans">Enviar y Abrir WhatsApp</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </motion.div>
                   )}
