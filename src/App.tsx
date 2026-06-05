@@ -270,7 +270,7 @@ function AppContent() {
               {/* Social media — minimal, brand-legitimacy signals */}
               <div className="flex items-center gap-4 pt-1">
                 <a
-                  href="https://www.facebook.com/mtymedical"
+                  href="https://www.facebook.com/profile.php?id=61590253446637"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -279,7 +279,7 @@ function AppContent() {
                   <Facebook size={13} strokeWidth={1.5} />
                 </a>
                 <a
-                  href="https://www.instagram.com/mtymedical"
+                  href="https://www.instagram.com/mtymedical/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
