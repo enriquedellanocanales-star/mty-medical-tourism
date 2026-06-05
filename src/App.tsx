@@ -324,8 +324,8 @@ function AppContent() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:concierge@mtymedical.com" className="hover:text-white transition-colors text-[11px]">
-                    concierge@mtymedical.com
+                  <a href="mailto:concierge@mtymedicaltourism.com" className="hover:text-white transition-colors text-[11px]">
+                    concierge@mtymedicaltourism.com
                   </a>
                 </li>
                 <li>
