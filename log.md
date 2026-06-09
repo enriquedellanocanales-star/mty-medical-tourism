@@ -2752,3 +2752,191 @@ Visitors from paid traffic need quick, passive trust signals. Social links allow
 ## BUILD
 ✅ 0 errors · 0 warnings · built in 23.05s
 
+---
+
+## Phase 13 — Dual form submit (Formspree + WhatsApp) + validation hints per step
+*(documented in prior session — see summary)*
+
+---
+
+## Phase 14 — Medical disclaimer form, partner program pages, referral tracking
+*(documented in prior session — see summary)*
+
+---
+
+## Phase 15 — Launch pricing update
+*(documented in prior session — see summary)*
+
+---
+
+## Partner Program Phase 1 — Content & UX improvements
+**Date**: June 9, 2026
+**Scope**: `src/pages/Partners.tsx` — content-only, no database, no routing, no design changes
+
+### Objective
+Improve trust, transparency, and conversion for prospective partners. A visitor must clearly understand: how the program works, when compensation is earned, how it is paid, and how long the process takes.
+
+### New Sections Added
+
+**1. How Compensation Works** (7-step numbered timeline)
+- Placed between "Who Can Partner" and "Compensation & Payment"
+- Steps: Register → Receive Referral Link → Share → Patient Completes Medical Review → Patient Pays In Full → Treatment Date Confirmed → Compensation Issued
+- Visual: numbered square badges (`MTY-dark`/`[#22B8CF]` accent), vertical connector line (`hidden sm:block`), editorial list
+
+**2. Compensation & Payment** (replaced prior minimal block)
+- Full `$200 USD` hero display
+- 3-column grid: Eligibility / Payment Method / Timeline
+- Eligibility: treatment package paid in full + treatment date confirmed
+- Payment: Wise preferred, alternatives on request
+- Timeline: max 14 business days after eligibility
+- Footer note: compensation is not issued for leads, consultations, or incomplete packages
+
+**3. What To Expect** (new transparency section before FAQ)
+- Two-column: editorial explainer + 4 requirement cards
+- Explains that medical referrals take 30–90 days
+- Goal: reduce future compensation disputes
+
+### FAQs Updated
+- Removed: "How and when is the $200 paid?" and "What happens if a patient cancels?"
+- Added 4 new precise FAQs:
+  1. When do I become eligible for compensation?
+  2. How do I receive payment? (Wise, alternatives on request)
+  3. How long does the referral process usually take? (30–90 days)
+  4. When will I receive payment? (max 14 business days)
+- Kept: Is there a limit on referrals / Do I need medical knowledge / Can I modify pricing
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `src/pages/Partners.tsx` | +255 lines, -45 lines. New sections + FAQ updates |
+
+### Build
+✅ 0 errors · 0 lints · built in 10.22s
+
+---
+
+## Partner Program Phase 2 — Instant Self-Service Referral System
+**Date**: June 9, 2026
+**Scope**: `src/pages/Partners.tsx` — client-side partner code generation. No Supabase, no database, no routing changes.
+
+### Objective
+Eliminate manual partner approval. Partners register, accept Terms & Conditions, and immediately receive a unique partner code and referral link. Zero waiting period.
+
+### Workflow Change
+
+**Removed (old flow)**:
+```
+Partner Registration → Pending Review → Manual Approval → Referral Link
+```
+
+**New flow (self-service)**:
+```
+Partner Registration → Accept Terms → Generate Partner Code → Generate Referral Link → Display Link → Copy Link → Ready To Refer
+```
+
+### Partner Code Generation
+
+**Function**: `generatePartnerCode()` — defined outside the component (pure utility, no side effects)
+
+**Logic**:
+```ts
+function generatePartnerCode(): string {
+  const num = Math.floor(1000 + Math.random() * 9000); // 4-digit random: 1000–9999
+  return `MTY-${num}`;
+}
+```
+
+**Format**: `MTY-XXXX` (e.g. `MTY-1048`, `MTY-5821`, `MTY-7710`)
+- Unique per session render
+- Human-readable
+- Uppercase
+- Contains no PII (no names, no emails, no phone fragments)
+
+**Trigger**: Generated inside `handleSubmit` before async calls. Set to component state (`setPartnerCode`, `setReferralLink`) synchronously so the success screen renders immediately.
+
+### Referral Link Generation
+
+```ts
+const link = `https://mtymedical.com/?ref=${code}`;
+```
+
+**Compatibility**: Preserves existing `?ref=` → `sessionStorage("mty_ref")` tracking in `Home.tsx`. The `referral_id` stored will match `partner_code` exactly — no transformations, no lowercase conversion.
+
+### WhatsApp + Formspree Payload Update
+
+Both notifications now include the generated code and link:
+- Formspree fields added: `partner_code`, `referral_link`
+- WhatsApp message updated: includes `*Partner Code:*` and `*Referral Link:*` lines for admin record-keeping
+
+### New State Variables
+| Variable | Type | Purpose |
+|----------|------|---------|
+| `partnerCode` | `string` | Stores generated MTY-XXXX code |
+| `referralLink` | `string` | Stores full https referral URL |
+| `copiedCode` | `boolean` | Drives "Copied!" feedback on code copy button |
+| `copiedLink` | `boolean` | Drives "Copied!" feedback on link copy button |
+
+### Copy Button Behavior
+- Uses `navigator.clipboard.writeText()`
+- On success: button switches to `<Check /> Copied` for 2000ms then reverts
+- Separate state for code vs. link — both can be in "copied" state simultaneously
+- No error handling shown to user (clipboard API fails only in non-secure or restricted contexts)
+
+### New Success Screen — "Welcome to the MTY Medical Partner Network"
+Replaces old "Application Received" stub. Components:
+
+1. **Header**: Check icon + `"Welcome to the MTY Medical Partner Network"` + personalized sub-message
+2. **Partner Code block**: Large monospace display of `MTY-XXXX` + `[Copy Code]` button
+3. **Referral Link block**: Full URL in monospace + `[Copy Link]` button (turquoise, primary CTA)
+4. **Next Steps**: 3 numbered steps (share link / earn $200 per completed package / review guidelines)
+
+### UI Copy Updates
+
+**"How It Works" section (3-card overview)**:
+- Card 01: "Register & Accept Terms" — "No waiting period."
+- Card 02: "Get Your Partner Code Instantly" — "Generated immediately upon submission — ready to share."
+- Card 03: No change.
+
+**Form header**:
+- Removed: "Our team will review your application and contact you within 2 business days."
+- New: "Complete the form, accept the Terms & Conditions, and your unique partner code and referral link will be generated immediately."
+
+**Submit button**:
+- Was: "Submit Application & Open WhatsApp"
+- Now: "Register & Get My Partner Code"
+
+### Referral Link Preview in "How Compensation Works"
+Under Step 2 "Receive Your Referral Link":
+- Added visual preview chip: `mtymedical.com/?ref=MTY-1048`
+- Styled: `bg-[#0F172A]` + `border-[#22B8CF]/30` + `font-mono text-[11px] text-[#22B8CF]`
+- Note: labeled as an example; actual link generated on registration
+
+### Future Supabase Migration Notes
+- `partner_code` field is ready to be used as primary key or unique field in `partners` table
+- `referral_id` in `patient_inquiries` table must match `partner_code` exactly (no transformation)
+- Current client-side generation must be replaced with server-side generation on Supabase migration to ensure true uniqueness at scale
+- Recommended Supabase schema:
+  ```sql
+  partners (
+    id uuid primary key,
+    partner_code text unique not null, -- MTY-XXXX
+    full_name text,
+    email text,
+    phone text,
+    profession text,
+    city_state text,
+    network_description text,
+    terms_accepted_at timestamptz,
+    created_at timestamptz default now()
+  )
+  ```
+- `referral_id` in patient inquiries table must reference `partner_code` (not `id`) for human-readable tracking
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `src/pages/Partners.tsx` | +130 lines net. Added `generatePartnerCode()`, new state variables, `handleCopy()`, updated `handleSubmit`, updated success screen, updated How It Works copy, updated form header + button, added referral link preview |
+
+### Build
+✅ 0 errors · 0 lints · built in 7.56s
+

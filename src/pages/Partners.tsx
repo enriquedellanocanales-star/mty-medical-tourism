@@ -13,6 +13,8 @@ import {
   Briefcase,
   PhoneCall,
   Clock,
+  Copy,
+  Link2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -94,10 +96,20 @@ const audiences = [
   },
 ];
 
+/** Generates a unique MTY-XXXX partner code (4 random digits, no PII). */
+function generatePartnerCode(): string {
+  const num = Math.floor(1000 + Math.random() * 9000);
+  return `MTY-${num}`;
+}
+
 export default function Partners({ lang }: PartnersProps) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [partnerCode, setPartnerCode] = useState<string>("");
+  const [referralLink, setReferralLink] = useState<string>("");
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -107,6 +119,18 @@ export default function Partners({ lang }: PartnersProps) {
     networkDescription: "",
     termsAccepted: false,
   });
+
+  const handleCopy = (text: string, type: "code" | "link") => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (type === "code") {
+        setCopiedCode(true);
+        setTimeout(() => setCopiedCode(false), 2000);
+      } else {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2000);
+      }
+    });
+  };
 
   const handleInput = (
     e: React.ChangeEvent<
@@ -121,6 +145,12 @@ export default function Partners({ lang }: PartnersProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Generate partner code + referral link instantly on submission
+    const code = generatePartnerCode();
+    const link = `https://mtymedical.com/?ref=${code}`;
+    setPartnerCode(code);
+    setReferralLink(link);
+
     // Email via Formspree — replace YOUR_PARTNER_FORMSPREE_ID
     try {
       await fetch("https://formspree.io/f/YOUR_PARTNER_FORMSPREE_ID", {
@@ -133,6 +163,8 @@ export default function Partners({ lang }: PartnersProps) {
           profession: formData.profession,
           city_state: formData.cityState,
           network_description: formData.networkDescription,
+          partner_code: code,
+          referral_link: link,
           source: "partner-application",
         }),
       });
@@ -140,15 +172,17 @@ export default function Partners({ lang }: PartnersProps) {
       // Continue to WhatsApp even if email fails
     }
 
-    // WhatsApp notification
+    // WhatsApp admin notification — includes partner code for record
     const waMsg =
-      `🤝 *MTY Medical — Partner Application*\n\n` +
+      `🤝 *MTY Medical — New Partner Registration*\n\n` +
       `*Name:* ${formData.fullName}\n` +
       `*Email:* ${formData.email}\n` +
       `*Phone:* ${formData.phone}\n` +
       `*Profession:* ${formData.profession}\n` +
       `*Location:* ${formData.cityState}\n` +
-      `*Network:* ${formData.networkDescription || "—"}`;
+      `*Network:* ${formData.networkDescription || "—"}\n\n` +
+      `*Partner Code:* ${code}\n` +
+      `*Referral Link:* ${link}`;
 
     window.open(
       `https://wa.me/528110487334?text=${encodeURIComponent(waMsg)}`,
@@ -215,21 +249,21 @@ export default function Partners({ lang }: PartnersProps) {
             {[
               {
                 step: "01",
-                titleEn: "Submit Application",
-                titleEs: "Envía tu Solicitud",
+                titleEn: "Register & Accept Terms",
+                titleEs: "Regístrate y Acepta los Términos",
                 bodyEn:
-                  "Complete the partner application below. Our team reviews all submissions and responds within 2 business days.",
+                  "Complete the partner application and accept the program Terms & Conditions. No waiting period.",
                 bodyEs:
-                  "Completa la solicitud de socio a continuación. Nuestro equipo revisa todas las solicitudes y responde en 2 días hábiles.",
+                  "Completa la solicitud de socio y acepta los Términos y Condiciones del programa. Sin período de espera.",
               },
               {
                 step: "02",
-                titleEn: "Get Approved",
-                titleEs: "Recibe Aprobación",
+                titleEn: "Get Your Partner Code Instantly",
+                titleEs: "Recibe Tu Código de Socio al Instante",
                 bodyEn:
-                  "Approved partners receive a unique referral identifier to share with their network.",
+                  "Upon submission, your unique partner code and referral link are generated immediately — ready to share.",
                 bodyEs:
-                  "Los socios aprobados reciben un identificador único de referido para compartir con su red.",
+                  "Al enviar tu solicitud, tu código único de socio y enlace de referido se generan de inmediato — listo para compartir.",
               },
               {
                 step: "03",
@@ -314,16 +348,17 @@ export default function Partners({ lang }: PartnersProps) {
             <div className="space-y-1">
               {[
                 {
-                  titleEn: "Register",
-                  titleEs: "Regístrate",
-                  bodyEn: "Submit your partner application and receive approval from our team.",
-                  bodyEs: "Envía tu solicitud de socio y recibe aprobación de nuestro equipo.",
+                  titleEn: "Register & Accept Terms",
+                  titleEs: "Regístrate y Acepta los Términos",
+                  bodyEn: "Complete the partner application and accept the Terms & Conditions. Activation is immediate.",
+                  bodyEs: "Completa la solicitud de socio y acepta los Términos y Condiciones. La activación es inmediata.",
                 },
                 {
                   titleEn: "Receive Your Referral Link",
                   titleEs: "Recibe Tu Enlace de Referido",
-                  bodyEn: "Once approved, you receive a unique referral identifier to share with your network.",
-                  bodyEs: "Una vez aprobado, recibes un identificador único de referido para compartir con tu red.",
+                  bodyEn: "Your unique partner code and referral link are generated instantly upon registration. Example:",
+                  bodyEs: "Tu código único de socio y enlace de referido se generan al instante al registrarte. Ejemplo:",
+                  preview: "mtymedical.com/?ref=MTY-1048",
                 },
                 {
                   titleEn: "Share With Potential Patients",
@@ -369,6 +404,14 @@ export default function Partners({ lang }: PartnersProps) {
                     <p className="text-xs text-[#64748B] leading-relaxed font-sans normal-case">
                       {lang === "en" ? step.bodyEn : step.bodyEs}
                     </p>
+                    {"preview" in step && step.preview && (
+                      <div className="mt-2 inline-flex items-center gap-2 bg-[#0F172A] border border-[#22B8CF]/30 px-3 py-1.5">
+                        <Link2 size={10} className="text-[#22B8CF] shrink-0" />
+                        <span className="font-mono text-[11px] text-[#22B8CF] tracking-wide">
+                          {step.preview}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -602,8 +645,8 @@ export default function Partners({ lang }: PartnersProps) {
                 <div className="h-px w-12 bg-[#22B8CF]/40 mx-auto mt-3" />
                 <p className="text-xs text-slate-400 mt-4 font-sans normal-case max-w-md mx-auto">
                   {lang === "en"
-                    ? "Complete the form below. Our team will review your application and contact you within 2 business days."
-                    : "Completa el formulario a continuación. Nuestro equipo revisará tu solicitud y te contactará en 2 días hábiles."}
+                    ? "Complete the form, accept the Terms & Conditions, and your unique partner code and referral link will be generated immediately."
+                    : "Completa el formulario, acepta los Términos y Condiciones, y tu código único de socio y enlace de referido se generarán de inmediato."}
                 </p>
               </div>
 
@@ -795,7 +838,7 @@ export default function Partners({ lang }: PartnersProps) {
                     ) : (
                       <>
                         <span>
-                          {lang === "en" ? "Submit Application & Open WhatsApp" : "Enviar Solicitud y Abrir WhatsApp"}
+                          {lang === "en" ? "Register & Get My Partner Code" : "Registrarme y Obtener Mi Código"}
                         </span>
                         <ArrowRight size={13} />
                       </>
@@ -805,19 +848,110 @@ export default function Partners({ lang }: PartnersProps) {
               </form>
             </>
           ) : (
-            /* Success state */
-            <div className="text-center py-12 space-y-5">
-              <div className="w-12 h-12 rounded-none bg-[#22B8CF]/10 border border-[#22B8CF]/30 flex items-center justify-center mx-auto">
-                <Check size={20} className="text-[#22B8CF]" />
+            /* ── SUCCESS: Partner Code + Referral Link ── */
+            <div className="py-12 space-y-8">
+              {/* Header */}
+              <div className="text-center space-y-4">
+                <div className="w-14 h-14 bg-[#22B8CF]/10 border border-[#22B8CF]/30 flex items-center justify-center mx-auto">
+                  <Check size={22} className="text-[#22B8CF]" />
+                </div>
+                <h2 className="text-xl sm:text-2xl font-serif font-bold text-white uppercase tracking-wider leading-snug">
+                  {lang === "en"
+                    ? "Welcome to the MTY Medical Partner Network"
+                    : "Bienvenido a la Red de Socios MTY Medical"}
+                </h2>
+                <p className="text-xs text-slate-400 font-sans normal-case max-w-sm mx-auto leading-relaxed">
+                  {lang === "en"
+                    ? `Registration complete, ${formData.fullName}. Your partner code and referral link are ready. You can start referring patients immediately.`
+                    : `Registro completado, ${formData.fullName}. Tu código de socio y enlace de referido están listos. Puedes comenzar a referir pacientes de inmediato.`}
+                </p>
               </div>
-              <h2 className="text-xl font-serif font-bold text-white uppercase tracking-wider">
-                {lang === "en" ? "Application Received" : "Solicitud Recibida"}
-              </h2>
-              <p className="text-sm text-slate-300 font-sans max-w-sm mx-auto leading-relaxed normal-case">
-                {lang === "en"
-                  ? `Thank you, ${formData.fullName}. Our team will review your application and contact you within 2 business days.`
-                  : `Gracias, ${formData.fullName}. Nuestro equipo revisará tu solicitud y te contactará en 2 días hábiles.`}
-              </p>
+
+              {/* Partner Code */}
+              <div className="bg-[#164E63]/20 border border-white/10 p-5 space-y-3">
+                <p className="text-[9px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                  {lang === "en" ? "Your Partner Code" : "Tu Código de Socio"}
+                </p>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-2xl sm:text-3xl font-bold text-white tracking-widest">
+                    {partnerCode}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(partnerCode, "code")}
+                    className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white transition-colors shrink-0"
+                  >
+                    {copiedCode ? (
+                      <>
+                        <Check size={11} className="text-[#22B8CF]" />
+                        <span className="text-[#22B8CF]">{lang === "en" ? "Copied" : "Copiado"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={11} />
+                        <span>{lang === "en" ? "Copy Code" : "Copiar Código"}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Referral Link */}
+              <div className="bg-[#164E63]/20 border border-white/10 p-5 space-y-3">
+                <p className="text-[9px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                  {lang === "en" ? "Your Referral Link" : "Tu Enlace de Referido"}
+                </p>
+                <div className="flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
+                  <span className="font-mono text-xs text-slate-300 break-all leading-relaxed">
+                    {referralLink}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(referralLink, "link")}
+                    className="flex items-center gap-1.5 bg-[#22B8CF] hover:bg-[#22B8CF]/90 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[#0F172A] transition-colors shrink-0"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <Check size={11} />
+                        <span>{lang === "en" ? "Copied!" : "¡Copiado!"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={11} />
+                        <span>{lang === "en" ? "Copy Link" : "Copiar Enlace"}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Next steps note */}
+              <div className="border border-white/8 bg-white/5 px-5 py-4 space-y-1.5">
+                <p className="text-[9px] font-bold text-white/40 uppercase tracking-widest font-sans">
+                  {lang === "en" ? "Next Steps" : "Próximos Pasos"}
+                </p>
+                {[
+                  {
+                    en: "Share your referral link with friends, colleagues, and your professional network.",
+                    es: "Comparte tu enlace de referido con amigos, colegas y tu red profesional.",
+                  },
+                  {
+                    en: "When a referred patient completes and pays for a treatment package, you earn USD $200.",
+                    es: "Cuando un paciente referido completa y paga un paquete de tratamiento, ganas USD $200.",
+                  },
+                  {
+                    en: "Review the Partner Guidelines to understand what you can and cannot represent.",
+                    es: "Revisa las Guías del Socio para entender lo que puedes y no puedes representar.",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2 pt-1.5">
+                    <span className="text-[#22B8CF] text-[10px] font-mono mt-0.5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                    <p className="text-[11px] text-slate-400 font-sans leading-relaxed normal-case">
+                      {lang === "en" ? item.en : item.es}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
