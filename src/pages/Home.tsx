@@ -1351,12 +1351,12 @@ export default function Home({ lang }: HomeProps) {
                           className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer"
                         >
                           <option value="">Select procedure...</option>
-                          <option value="Laparoscopic_Gallbladder">Laparoscopic Gallbladder ($4,900 USD)</option>
-                          <option value="Advanced_LASIK">Advanced LASIK ($3,400 USD)</option>
-                          <option value="Rhinoplasty">Rhinoplasty ($4,500 USD)</option>
-                          <option value="Smile_Makeover">German Zirconia Smile Makeover ($5,800 USD)</option>
-                          <option value="Advanced_Reflux">Advanced Reflux Correction ($5,800 USD)</option>
-                          <option value="Laparoscopic_Hysterectomy">Laparoscopic Hysterectomy ($5,900 USD)</option>
+                          <option value="Laparoscopic_Gallbladder">Laparoscopic Gallbladder ($5,900 USD)</option>
+                          <option value="Advanced_LASIK">Advanced LASIK ($3,900 USD)</option>
+                          <option value="Rhinoplasty">Rhinoplasty ($5,900 USD)</option>
+                          <option value="Smile_Makeover">German Zirconia Smile Makeover ($6,900 USD)</option>
+                          <option value="Advanced_Reflux">Advanced Reflux Correction ($6,900 USD)</option>
+                          <option value="Laparoscopic_Hysterectomy">Laparoscopic Hysterectomy ($6,900 USD)</option>
                         </select>
                       </div>
 

@@ -31,7 +31,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "lasik-monterrey",
     procedureKey: "Advanced_LASIK",
-    startingPrice: "$3,400 USD",
+    startingPrice: "$3,900 USD",
     en: {
       title: "Advanced LASIK Laser Eye Surgery",
       subtitle: "Bicultural Refractive Adjustments in Monterrey's Premier Ophthalmic Clinics",
@@ -92,7 +92,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "gallbladder-surgery-mexico",
     procedureKey: "Laparoscopic_Gallbladder",
-    startingPrice: "$4,900 USD",
+    startingPrice: "$5,900 USD",
     en: {
       title: "Laparoscopic Gallbladder Removal",
       subtitle: "Minimally Invasive Gallstone Solution in High-End Certified Surgical Centers",
@@ -153,7 +153,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "reflux-surgery-monterrey",
     procedureKey: "Advanced_Reflux",
-    startingPrice: "$5,800 USD",
+    startingPrice: "$6,900 USD",
     en: {
       title: "Laparoscopic Nissen Anti-Reflux Surgery",
       subtitle: "Permanent GERD and Hiatal Hernia Relief by Board-Certified Specialists",
@@ -214,7 +214,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "laparoscopic-hysterectomy",
     procedureKey: "Laparoscopic_Hysterectomy",
-    startingPrice: "$5,900 USD",
+    startingPrice: "$6,900 USD",
     en: {
       title: "Laparoscopic Hysterectomy Coordination",
       subtitle: "Minimally Invasive Guided Gynecological Surgical Excellence",
@@ -275,7 +275,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "rhinoplasty-monterrey",
     procedureKey: "Rhinoplasty",
-    startingPrice: "$4,500 USD",
+    startingPrice: "$5,900 USD",
     en: {
       title: "Bespoke Aesthetic Rhinoplasty",
       subtitle: "Reconstructive and Cosmetic Nasal Design by Highly Skilled Plastic Surgeons",
@@ -336,7 +336,7 @@ export const proceduresData: ProcedureData[] = [
   {
     slug: "smile-makeover-mexico",
     procedureKey: "Smile_Makeover",
-    startingPrice: "$5,800 USD",
+    startingPrice: "$6,900 USD",
     en: {
       title: "Premium Dental Smile Makeover",
       subtitle: "Full Restorative Aesthetics with Advanced German Zirconia Crowns",
