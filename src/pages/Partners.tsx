@@ -12,6 +12,7 @@ import {
   Award,
   Briefcase,
   PhoneCall,
+  Clock,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -21,16 +22,34 @@ interface PartnersProps {
 
 const partnerFaqs = [
   {
-    qEn: "How and when is the $200 compensation paid?",
-    aEn: "Compensation is processed after the referred patient completes the procedure and their account is fully settled. MTY Medical Tourism will contact you to arrange payment through agreed methods.",
-    qEs: "¿Cómo y cuándo se paga la compensación de $200?",
-    aEs: "La compensación se procesa después de que el paciente referido completa el procedimiento y su cuenta queda totalmente liquidada. MTY Medical Tourism se pondrá en contacto para acordar el método de pago.",
+    qEn: "When do I become eligible for compensation?",
+    aEn: "You become eligible once the referred patient has paid the treatment package in full and treatment dates have been confirmed. Compensation is not issued for leads, consultations, or incomplete treatment packages.",
+    qEs: "¿Cuándo soy elegible para recibir compensación?",
+    aEs: "Eres elegible una vez que el paciente referido ha pagado el paquete de tratamiento en su totalidad y las fechas de tratamiento han sido confirmadas. La compensación no se emite por prospectos, consultas ni paquetes de tratamiento incompletos.",
+  },
+  {
+    qEn: "How do I receive payment?",
+    aEn: "Wise is the preferred payment method. Alternative payment methods may be available upon request. MTY Medical Tourism will contact you to confirm payment details once eligibility requirements have been met.",
+    qEs: "¿Cómo recibo el pago?",
+    aEs: "Wise es el método de pago preferido. Métodos alternativos pueden estar disponibles bajo solicitud. MTY Medical Tourism se pondrá en contacto para confirmar los datos de pago una vez que se hayan cumplido los requisitos de elegibilidad.",
+  },
+  {
+    qEn: "How long does the referral process usually take?",
+    aEn: "Most successful referrals are completed within approximately 30–90 days depending on the procedure and patient readiness. Medical referrals involve review, specialist approval, scheduling, and travel planning — timelines vary by case.",
+    qEs: "¿Cuánto tiempo tarda generalmente el proceso de referido?",
+    aEs: "La mayoría de los referidos exitosos se completan en aproximadamente 30 a 90 días, dependiendo del procedimiento y la disposición del paciente. Los referidos médicos implican revisión, aprobación del especialista, programación y planificación de viaje; los plazos varían según el caso.",
+  },
+  {
+    qEn: "When will I receive payment?",
+    aEn: "Compensation is issued within a maximum of 14 business days after eligibility requirements have been met.",
+    qEs: "¿Cuándo recibiré el pago?",
+    aEs: "La compensación se emite en un máximo de 14 días hábiles después de que se hayan cumplido los requisitos de elegibilidad.",
   },
   {
     qEn: "Is there a limit on how many patients I can refer?",
-    aEn: "No. There is no cap on referrals. Every completed and settled procedure from your network earns the $200 fee.",
+    aEn: "No. There is no cap on referrals. Every successful referral that results in a fully paid and confirmed treatment package earns the $200 compensation.",
     qEs: "¿Hay un límite en cuántos pacientes puedo referir?",
-    aEs: "No. No hay límite en referidos. Cada procedimiento completado y liquidado proveniente de tu red genera la compensación de $200.",
+    aEs: "No. No hay límite en referidos. Cada referido exitoso que resulte en un paquete de tratamiento completamente pagado y confirmado genera la compensación de $200.",
   },
   {
     qEn: "Do I need medical knowledge to participate?",
@@ -43,12 +62,6 @@ const partnerFaqs = [
     aEn: "No. Partners are not authorized to quote, negotiate, or modify pricing. All pricing information must come directly from MTY Medical Tourism's official published materials.",
     qEs: "¿Puedo modificar o negociar precios para los pacientes que refiero?",
     aEs: "No. Los socios no están autorizados para cotizar, negociar ni modificar precios. Toda la información de precios debe provenir directamente de los materiales oficiales de MTY Medical Tourism.",
-  },
-  {
-    qEn: "What happens if a referred patient cancels?",
-    aEn: "Compensation is only earned when the procedure is completed and the account is fully settled. Cancelled, postponed, or incomplete procedures do not qualify for partner compensation.",
-    qEs: "¿Qué sucede si un paciente referido cancela?",
-    aEs: "La compensación solo se devenga cuando el procedimiento se completa y la cuenta está totalmente liquidada. Los procedimientos cancelados, pospuestos o incompletos no califican para compensación.",
   },
 ];
 
@@ -281,54 +294,251 @@ export default function Partners({ lang }: PartnersProps) {
         </div>
       </section>
 
-      {/* ── 4. COMPENSATION ── */}
-      <section className="py-20 md:py-28 bg-[#0F172A] text-white border-b border-white/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-[#22B8CF] text-[10px] font-bold tracking-[0.3em] uppercase block mb-6">
-            {lang === "en" ? "Partner Compensation" : "Compensación del Socio"}
-          </span>
-          <div className="inline-flex flex-col items-center gap-2 mb-8">
-            <span className="text-slate-400 text-[10px] uppercase tracking-widest font-sans">
-              {lang === "en" ? "Fixed fee per completed procedure" : "Tarifa fija por procedimiento completado"}
+      {/* ── 4. HOW COMPENSATION WORKS — 7-step timeline ── */}
+      <section className="py-20 md:py-28 bg-white border-b border-slate-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <span className="text-[#22B8CF] text-[10px] font-bold tracking-[0.3em] uppercase block mb-3">
+              {lang === "en" ? "Compensation Process" : "Proceso de Compensación"}
             </span>
-            <span className="text-5xl sm:text-6xl font-serif font-bold text-[#22B8CF] tracking-wider">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold uppercase tracking-wider text-[#0F172A]">
+              {lang === "en" ? "How Compensation Works" : "Cómo Funciona la Compensación"}
+            </h2>
+            <div className="h-px w-12 bg-[#22B8CF]/50 mx-auto mt-3" />
+          </div>
+
+          <div className="relative">
+            {/* Vertical connector line */}
+            <div className="absolute left-[19px] top-8 bottom-8 w-px bg-slate-200 hidden sm:block" aria-hidden="true" />
+
+            <div className="space-y-1">
+              {[
+                {
+                  titleEn: "Register",
+                  titleEs: "Regístrate",
+                  bodyEn: "Submit your partner application and receive approval from our team.",
+                  bodyEs: "Envía tu solicitud de socio y recibe aprobación de nuestro equipo.",
+                },
+                {
+                  titleEn: "Receive Your Referral Link",
+                  titleEs: "Recibe Tu Enlace de Referido",
+                  bodyEn: "Once approved, you receive a unique referral identifier to share with your network.",
+                  bodyEs: "Una vez aprobado, recibes un identificador único de referido para compartir con tu red.",
+                },
+                {
+                  titleEn: "Share With Potential Patients",
+                  titleEs: "Comparte Con Pacientes Potenciales",
+                  bodyEn: "Share your referral link with individuals who may benefit from medical coordination services.",
+                  bodyEs: "Comparte tu enlace con personas que puedan beneficiarse de los servicios de coordinación médica.",
+                },
+                {
+                  titleEn: "Patient Completes Medical Review",
+                  titleEs: "El Paciente Completa la Revisión Médica",
+                  bodyEn: "The referred patient completes the initial consultation and specialist evaluation.",
+                  bodyEs: "El paciente referido completa la consulta inicial y la evaluación del especialista.",
+                },
+                {
+                  titleEn: "Patient Pays Treatment Package In Full",
+                  titleEs: "El Paciente Paga el Paquete de Tratamiento en Su Totalidad",
+                  bodyEn: "The patient settles the full treatment package amount with MTY Medical Tourism.",
+                  bodyEs: "El paciente liquida el monto total del paquete de tratamiento con MTY Medical Tourism.",
+                },
+                {
+                  titleEn: "Treatment Date Is Confirmed",
+                  titleEs: "Se Confirma la Fecha de Tratamiento",
+                  bodyEn: "The procedure date is officially scheduled and confirmed with the patient and medical team.",
+                  bodyEs: "La fecha del procedimiento es programada y confirmada oficialmente con el paciente y el equipo médico.",
+                },
+                {
+                  titleEn: "Compensation Issued",
+                  titleEs: "Compensación Emitida",
+                  bodyEn: "USD $200 is issued to you within a maximum of 14 business days via Wise or agreed method.",
+                  bodyEs: "USD $200 se emite en un máximo de 14 días hábiles via Wise o el método acordado.",
+                },
+              ].map((step, i) => (
+                <div key={i} className="flex gap-5 items-start py-4">
+                  <div className="w-10 h-10 bg-[#0F172A] border border-[#22B8CF]/30 flex items-center justify-center shrink-0 z-10 relative">
+                    <span className="text-[#22B8CF] font-mono text-[10px] font-bold">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="flex-1 pt-1.5 pb-2 border-b border-slate-100 last:border-0">
+                    <h3 className="font-serif text-sm font-bold uppercase tracking-wide text-[#0F172A] mb-1">
+                      {lang === "en" ? step.titleEn : step.titleEs}
+                    </h3>
+                    <p className="text-xs text-[#64748B] leading-relaxed font-sans normal-case">
+                      {lang === "en" ? step.bodyEn : step.bodyEs}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. COMPENSATION & PAYMENT ── */}
+      <section className="py-20 md:py-28 bg-[#0F172A] text-white border-b border-white/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="text-[#22B8CF] text-[10px] font-bold tracking-[0.3em] uppercase block mb-3">
+              {lang === "en" ? "Partner Earnings" : "Ganancias del Socio"}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold uppercase tracking-wider text-white">
+              {lang === "en" ? "Compensation & Payment" : "Compensación y Pago"}
+            </h2>
+            <div className="h-px w-12 bg-[#22B8CF]/40 mx-auto mt-3" />
+          </div>
+
+          {/* Amount display */}
+          <div className="text-center mb-10">
+            <span className="text-slate-400 text-[10px] uppercase tracking-widest font-sans block mb-2">
+              {lang === "en" ? "Per Successful Referral" : "Por Referido Exitoso"}
+            </span>
+            <span className="text-6xl sm:text-7xl font-serif font-bold text-[#22B8CF] tracking-wider block">
               $200
             </span>
-            <span className="text-slate-400 text-xs font-sans">USD</span>
+            <span className="text-slate-400 text-xs font-sans mt-1 block">USD</span>
           </div>
 
-          <div className="max-w-md mx-auto bg-[#164E63]/20 border border-white/10 p-6 text-left space-y-3 mb-8">
-            <p className="text-[10px] font-bold text-white/60 uppercase tracking-widest font-sans mb-3">
-              {lang === "en" ? "Compensation is earned when:" : "La compensación se devenga cuando:"}
-            </p>
-            {[
-              {
-                en: "The referred patient completes the scheduled procedure",
-                es: "El paciente referido completa el procedimiento programado",
-              },
-              {
-                en: "The patient account is fully settled with MTY Medical Tourism",
-                es: "La cuenta del paciente queda totalmente liquidada con MTY Medical Tourism",
-              },
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2.5">
-                <Check size={13} className="text-[#22B8CF] mt-0.5 shrink-0" />
-                <span className="text-xs text-slate-300 font-sans leading-snug normal-case">
-                  {lang === "en" ? item.en : item.es}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+
+            {/* Eligibility */}
+            <div className="bg-[#164E63]/20 border border-white/10 p-5 space-y-3">
+              <p className="text-[9px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                {lang === "en" ? "Eligibility Requirements" : "Requisitos de Elegibilidad"}
+              </p>
+              {[
+                {
+                  en: "Patient treatment package paid in full",
+                  es: "Paquete de tratamiento pagado en su totalidad",
+                },
+                {
+                  en: "Treatment date confirmed",
+                  es: "Fecha de tratamiento confirmada",
+                },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <Check size={12} className="text-[#22B8CF] mt-0.5 shrink-0" />
+                  <span className="text-[11px] text-slate-300 font-sans leading-snug normal-case">
+                    {lang === "en" ? item.en : item.es}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Payment method */}
+            <div className="bg-[#164E63]/20 border border-white/10 p-5 space-y-3">
+              <p className="text-[9px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                {lang === "en" ? "Payment Method" : "Método de Pago"}
+              </p>
+              {[
+                {
+                  en: "Wise (preferred)",
+                  es: "Wise (preferido)",
+                },
+                {
+                  en: "Alternative methods available upon request",
+                  es: "Métodos alternativos disponibles bajo solicitud",
+                },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <Check size={12} className="text-[#22B8CF] mt-0.5 shrink-0" />
+                  <span className="text-[11px] text-slate-300 font-sans leading-snug normal-case">
+                    {lang === "en" ? item.en : item.es}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Timeline */}
+            <div className="bg-[#164E63]/20 border border-white/10 p-5 space-y-3">
+              <p className="text-[9px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                {lang === "en" ? "Payment Timeline" : "Plazo de Pago"}
+              </p>
+              <div className="flex items-start gap-2.5">
+                <Clock size={12} className="text-[#22B8CF] mt-0.5 shrink-0" />
+                <span className="text-[11px] text-slate-300 font-sans leading-snug normal-case">
+                  {lang === "en"
+                    ? "Within a maximum of 14 business days after eligibility requirements have been met."
+                    : "En un máximo de 14 días hábiles después de que se hayan cumplido los requisitos de elegibilidad."}
                 </span>
               </div>
-            ))}
+            </div>
+
           </div>
 
-          <p className="text-[11px] text-slate-500 font-sans normal-case max-w-md mx-auto leading-relaxed">
+          <p className="text-[10px] text-slate-500 font-sans normal-case max-w-xl mx-auto leading-relaxed text-center mt-8">
             {lang === "en"
-              ? "There is no limit on referrals. There are no enrollment fees or subscription costs. Compensation is paid after procedure completion and account settlement only."
-              : "No hay límite en referidos. No hay cuotas de inscripción ni costos de membresía. La compensación se paga únicamente tras la finalización del procedimiento y la liquidación de la cuenta."}
+              ? "Compensation is earned for successful patient referrals that result in a fully paid and confirmed treatment package. Compensation is not issued for leads, consultations, or incomplete packages. There are no enrollment fees or subscription costs."
+              : "La compensación se devenga por referidos exitosos de pacientes que resulten en un paquete de tratamiento completamente pagado y confirmado. No se emite compensación por prospectos, consultas ni paquetes incompletos. No hay cuotas de inscripción ni costos de membresía."}
           </p>
         </div>
       </section>
 
-      {/* ── 5. FAQ ── */}
+      {/* ── 6. WHAT TO EXPECT ── */}
+      <section className="py-20 md:py-28 bg-[#FAFAF9] border-b border-slate-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="text-[#164E63] text-[10px] font-bold tracking-[0.3em] uppercase block mb-3">
+              {lang === "en" ? "Transparency" : "Transparencia"}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold uppercase tracking-wider text-[#0F172A]">
+              {lang === "en" ? "What To Expect" : "Qué Puede Esperar"}
+            </h2>
+            <div className="h-px w-12 bg-[#164E63]/30 mx-auto mt-3" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+            <div>
+              <p className="text-sm text-[#0F172A] font-serif font-semibold leading-relaxed mb-4 normal-case">
+                {lang === "en"
+                  ? "Medical referrals differ from traditional referral programs."
+                  : "Los referidos médicos son distintos a los programas de referidos tradicionales."}
+              </p>
+              <p className="text-xs text-[#64748B] font-sans leading-relaxed normal-case mb-5">
+                {lang === "en"
+                  ? "Every patient case undergoes an individualized review process. Timelines depend on the procedure, specialist availability, and the patient's own readiness to proceed."
+                  : "Cada caso de paciente pasa por un proceso de revisión individualizado. Los plazos dependen del procedimiento, la disponibilidad del especialista y la disposición del propio paciente para avanzar."}
+              </p>
+              <p className="text-xs text-[#64748B] font-sans leading-relaxed normal-case">
+                {lang === "en"
+                  ? "Most successful referrals are completed within approximately 30–90 days depending on the procedure and patient readiness."
+                  : "La mayoría de los referidos exitosos se completan en aproximadamente 30 a 90 días, dependiendo del procedimiento y la disposición del paciente."}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-[9px] font-bold text-[#164E63] uppercase tracking-widest font-sans mb-4">
+                {lang === "en" ? "Patients Often Require" : "Los Pacientes Frecuentemente Requieren"}
+              </p>
+              {[
+                { en: "Medical review by a specialist", es: "Revisión médica por un especialista" },
+                { en: "Specialist approval to proceed", es: "Aprobación del especialista para continuar" },
+                { en: "Procedure scheduling & coordination", es: "Programación y coordinación del procedimiento" },
+                { en: "Travel planning and logistics", es: "Planificación de viaje y logística" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2.5 bg-white border border-slate-200/60 px-4 py-3">
+                  <Clock size={12} className="text-[#164E63]/60 mt-0.5 shrink-0" />
+                  <span className="text-xs text-[#475569] font-sans normal-case">
+                    {lang === "en" ? item.en : item.es}
+                  </span>
+                </div>
+              ))}
+
+              <div className="bg-[#164E63]/5 border border-[#164E63]/15 px-4 py-3 mt-2">
+                <p className="text-[10px] text-[#164E63] font-sans leading-relaxed normal-case">
+                  {lang === "en"
+                    ? "Setting realistic expectations benefits everyone — partners, patients, and our coordination team."
+                    : "Establecer expectativas realistas beneficia a todos: socios, pacientes y nuestro equipo de coordinación."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. FAQ ── */}
       <section className="py-20 md:py-28 bg-white border-b border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
