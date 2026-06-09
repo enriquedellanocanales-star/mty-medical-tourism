@@ -158,7 +158,8 @@ export default function Home({ lang }: HomeProps) {
     timeframe: "",
     hsaPlanning: "",
     contactMethod: "",
-    termsAccepted: false
+    termsAccepted: false,
+    medicalDisclaimer: false
   });
 
   const toggleFaq = (index: number) => {
@@ -192,9 +193,17 @@ export default function Home({ lang }: HomeProps) {
     });
   };
 
+  // Referral tracking: read ?ref= from URL, persist in sessionStorage
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) sessionStorage.setItem("mty_ref", ref);
+  }, []);
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const referralId = sessionStorage.getItem("mty_ref") || "";
 
     const procNames: Record<string, string> = {
       Laparoscopic_Gallbladder: "Laparoscopic Gallbladder",
@@ -221,6 +230,7 @@ export default function Home({ lang }: HomeProps) {
           hsa_planning: formData.hsaPlanning,
           medical_files: formData.medicalFiles.join(", ") || "—",
           notes: formData.clinicalNotes || "—",
+          referral_id: referralId || "direct",
         }),
       });
     } catch {
@@ -237,7 +247,8 @@ export default function Home({ lang }: HomeProps) {
       `*Procedure:* ${procNames[formData.procedure] || formData.procedure || "—"}\n` +
       `*Timeline:* ${formData.timeframe || "—"}\n` +
       `*Contact via:* ${formData.contactMethod}\n` +
-      `*Notes:* ${formData.clinicalNotes || "—"}`;
+      `*Notes:* ${formData.clinicalNotes || "—"}` +
+      (referralId ? `\n*Referral:* ${referralId}` : "");
 
     window.open(
       `https://wa.me/528110487334?text=${encodeURIComponent(waMsg)}`,
@@ -260,7 +271,8 @@ export default function Home({ lang }: HomeProps) {
       timeframe: "",
       hsaPlanning: "",
       contactMethod: "",
-      termsAccepted: false
+      termsAccepted: false,
+      medicalDisclaimer: false
     });
     setCurrentStep(1);
     setIsSubmitted(false);
@@ -1513,9 +1525,44 @@ export default function Home({ lang }: HomeProps) {
                         </label>
                       </div>
 
+                      {/* ── MEDICAL DISCLAIMER (Task 1) ── */}
+                      <div className="mt-5 border border-white/10 bg-[#164E63]/10 p-4 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <ShieldAlert size={13} className="text-[#22B8CF] shrink-0" />
+                          <span className="text-[10px] font-bold text-[#22B8CF] uppercase tracking-widest font-sans">
+                            <span className="lang-en">Important Notice</span>
+                            <span className="lang-es font-sans">Aviso Importante</span>
+                          </span>
+                        </div>
+                        <div className="text-[10px] text-slate-400 leading-relaxed font-sans space-y-2 normal-case">
+                          <span className="lang-en block space-y-2">
+                            <p>MTY Medical Tourism is a medical coordination and patient support company. We assist patients with procedure coordination, scheduling, travel logistics, accommodations, transportation, and communication with participating healthcare providers.</p>
+                            <p>All medical evaluations, diagnoses, treatment recommendations, procedures, and clinical decisions are performed solely by the licensed physicians, specialists, and healthcare facilities providing care.</p>
+                            <p>Submission of this form does not guarantee medical acceptance, treatment eligibility, procedure approval, or specific outcomes. All cases are subject to medical review and final approval by the treating physician.</p>
+                          </span>
+                          <span className="lang-es font-sans block space-y-2">
+                            <p>MTY Medical Tourism es una empresa de coordinación médica y apoyo al paciente. Nuestra función consiste en coordinar procedimientos, gestionar citas, apoyar con logística de viaje, hospedaje, transportación y facilitar la comunicación con los proveedores de servicios médicos participantes.</p>
+                            <p>Todas las evaluaciones médicas, diagnósticos, recomendaciones de tratamiento, procedimientos y decisiones clínicas son responsabilidad exclusiva de los médicos especialistas y de las instituciones de salud que proporcionan la atención.</p>
+                            <p>El envío de este formulario no garantiza aceptación médica, elegibilidad para tratamiento, aprobación de procedimiento ni resultados específicos. Todos los casos están sujetos a revisión médica y aprobación final por parte del especialista tratante.</p>
+                          </span>
+                        </div>
+                        <label className="flex items-start gap-2.5 text-[11px] text-slate-300 cursor-pointer select-none pt-1">
+                          <input
+                            type="checkbox"
+                            checked={formData.medicalDisclaimer}
+                            onChange={(e) => setFormData(prev => ({ ...prev, medicalDisclaimer: e.target.checked }))}
+                            className="mt-0.5 accent-[#22B8CF] shrink-0"
+                          />
+                          <p className="leading-snug font-sans">
+                            <span className="lang-en">I understand that MTY Medical Tourism provides coordination services and that all medical decisions are made by the treating physician and healthcare facility.</span>
+                            <span className="lang-es font-sans">Entiendo que MTY Medical Tourism proporciona servicios de coordinación y que todas las decisiones médicas corresponden al médico tratante y a la institución de salud responsable.</span>
+                          </p>
+                        </label>
+                      </div>
+
                       <div className="pt-4 space-y-2 font-sans">
                         {/* Validation hints — always visible on Step 3 if anything is missing */}
-                        {(!formData.contactMethod || !formData.termsAccepted) && (
+                        {(!formData.contactMethod || !formData.termsAccepted || !formData.medicalDisclaimer) && (
                           <div className="text-[10px] text-amber-400/75 font-sans leading-relaxed space-y-0.5 text-right">
                             {!formData.contactMethod && (
                               <p>
@@ -1527,6 +1574,12 @@ export default function Home({ lang }: HomeProps) {
                               <p>
                                 <span className="lang-en">· Accept the coordination terms to submit</span>
                                 <span className="lang-es font-sans">· Acepta los términos de coordinación para enviar</span>
+                              </p>
+                            )}
+                            {!formData.medicalDisclaimer && (
+                              <p>
+                                <span className="lang-en">· Confirm the medical coordination notice above</span>
+                                <span className="lang-es font-sans">· Confirma el aviso de coordinación médica</span>
                               </p>
                             )}
                           </div>
@@ -1542,7 +1595,7 @@ export default function Home({ lang }: HomeProps) {
                           </button>
                           <button 
                             type="submit" 
-                            disabled={isSubmitting || !formData.contactMethod || !formData.termsAccepted}
+                            disabled={isSubmitting || !formData.contactMethod || !formData.termsAccepted || !formData.medicalDisclaimer}
                             className="bg-[#22B8CF] hover:bg-[#22B8CF]/90 text-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed font-extrabold text-xs py-3.5 px-6 uppercase tracking-widest transition-colors cursor-pointer"
                           >
                             {isSubmitting ? (

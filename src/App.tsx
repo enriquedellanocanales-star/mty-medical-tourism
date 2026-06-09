@@ -38,6 +38,8 @@ import { motion, AnimatePresence } from "motion/react";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import ProcedureDetail from "./pages/ProcedureDetail";
+import Partners from "./pages/Partners";
+import PartnerTerms from "./pages/PartnerTerms";
 
 function AppContent() {
   // Navigation & Language state
@@ -221,6 +223,10 @@ function AppContent() {
           <Route path="/rhinoplasty-monterrey" element={<ProcedureDetail lang={lang} slug="rhinoplasty-monterrey" />} />
           <Route path="/smile-makeover-mexico" element={<ProcedureDetail lang={lang} slug="smile-makeover-mexico" />} />
 
+          {/* Partner Program */}
+          <Route path="/partners" element={<Partners lang={lang} />} />
+          <Route path="/partners/terms" element={<PartnerTerms lang={lang} />} />
+
           {/* Graceful fallback redirects */}
           <Route path="*" element={<Home lang={lang} />} />
         </Routes>
@@ -368,6 +374,12 @@ function AppContent() {
                     <span className="lang-en">Privacy Policy</span>
                     <span className="lang-es font-sans">Política de Privacidad</span>
                   </a>
+                </li>
+                <li className="pt-1 border-t border-white/5 mt-1">
+                  <Link to="/partners" className="hover:text-white transition-colors text-white/25">
+                    <span className="lang-en">Partner Program</span>
+                    <span className="lang-es font-sans">Programa de Socios</span>
+                  </Link>
                 </li>
               </ul>
             </div>
