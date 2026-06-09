@@ -2940,3 +2940,125 @@ Under Step 2 "Receive Your Referral Link":
 ### Build
 ✅ 0 errors · 0 lints · built in 7.56s
 
+---
+
+## Patient Intake Questionnaire — Phase 3: Lead Qualification Expansion
+**Date**: June 9, 2026
+**Scope**: `src/pages/Home.tsx` — form fields only. No design, no routing, no branding changes.
+
+### Objective
+Improve lead qualification for travel readiness, medical readiness, purchase intent, and financial preparedness — without adding friction or extra steps. All new questions are optional dropdowns inside the existing 3-step wizard.
+
+### Step 2 Changes — Medical Profile
+
+**New field added**: `previousMedicalEvaluation`
+- **Position**: After "Do you currently have:" checkboxes, before "Clinical Symptoms" textarea
+- **Label EN**: "Have you previously been evaluated by a physician for this condition?"
+- **Label ES**: "¿Ha sido evaluado previamente por un médico para esta condición?"
+- **Type**: Dropdown (optional)
+- **Options**: Yes / No (bilingual via `lang` prop)
+
+### Step 3 Changes — Preferences
+
+**New question 1**: `passportStatus` (first question in Step 3)
+- **Label EN**: "Do you currently have a valid passport?"
+- **Label ES**: "¿Cuenta actualmente con pasaporte vigente?"
+- **Type**: Dropdown (optional)
+- **Options EN**: Yes / Currently Renewing / No
+- **Options ES**: Sí / En Renovación / No
+- **Layout**: 2-col grid (left) paired with `timeframe` (right)
+
+**Existing question**: `timeframe` (Medical Timeline Urgency)
+- No content changes. Options translated into Spanish for full bilingual support.
+- Now placed in 2-col grid (right) paired with `passportStatus` (left)
+
+**New question 2**: `decisionStage`
+- **Position**: After timeline, new 2-col grid row (left)
+- **Label EN**: "How would you describe your current decision stage?"
+- **Label ES**: "¿Cómo describiría su etapa actual de decisión?"
+- **Type**: Dropdown (optional)
+- **Options EN**: Ready to Move Forward / Comparing Options / Gathering Information Only
+- **Options ES**: Listo para Avanzar / Comparando Opciones / Solo Buscando Información
+
+**New question 3**: `travelWillingness`
+- **Position**: After decision stage, new 2-col grid row (right)
+- **Label EN**: "If medically approved, would you travel to Monterrey?"
+- **Label ES**: "Si es aprobado, ¿viajaría a Monterrey para su tratamiento?"
+- **Type**: Dropdown (optional)
+- **Options EN**: Yes / Maybe / Not Sure Yet
+- **Options ES**: Sí / Tal Vez / Aún No Estoy Seguro
+
+**Modified question**: `paymentPlanning` (replaced `hsaPlanning`)
+- **Old label**: "Insurance / HSA Planning Status"
+- **New label EN**: "How do you anticipate covering treatment expenses?"
+- **New label ES**: "¿Cómo anticipa cubrir los gastos del procedimiento?"
+- **Old field name**: `hsaPlanning`
+- **New field name**: `paymentPlanning`
+- **New options EN**: Personal Funds / HSA / FSA / Insurance Reimbursement / Still Evaluating Options
+- **New options ES**: Recursos Propios / Fondos HSA / FSA / Reembolso de Seguro / Aún Evaluando Opciones
+- **Layout**: Full-width (below the 2-col decision stage row)
+
+### WhatsApp Summary Updates
+
+WhatsApp message now includes all 5 new fields, grouped logically:
+```
+*Procedure:* ...
+*Prior Physician Evaluation:* ...
+*Notes:* ...
+
+*Passport:* ...
+*Timeline:* ...
+*Decision Stage:* ...
+*Travel Willingness:* ...
+*Payment Planning:* ...
+*Contact via:* ...
+```
+
+### Formspree Payload Updates
+
+New fields added to JSON body:
+- `previous_medical_evaluation`
+- `passport_status`
+- `decision_stage`
+- `travel_willingness`
+- `payment_planning` (renamed from `hsa_planning`)
+
+### Future Supabase Migration — Field Preparation
+
+The following fields are prepared for migration into the `patient_inquiries` table:
+
+| Field (JS) | DB Column | Type |
+|---|---|---|
+| `previousMedicalEvaluation` | `previous_medical_evaluation` | text, nullable |
+| `passportStatus` | `passport_status` | text, nullable |
+| `decisionStage` | `decision_stage` | text, nullable |
+| `travelWillingness` | `travel_willingness` | text, nullable |
+| `paymentPlanning` | `payment_planning` | text, nullable |
+
+Note: `hsaPlanning` / `hsa_planning` column should be renamed to `payment_planning` during Supabase schema creation.
+
+### Step 3 Layout (New)
+```
+[passportStatus (opt)] [timeframe (opt)]
+[decisionStage (opt)]  [travelWillingness (opt)]
+[paymentPlanning (opt) — full width]
+[contactMethod — REQUIRED]
+[termsAccepted — REQUIRED checkbox]
+[medicalDisclaimer — REQUIRED checkbox]
+```
+
+### UX Notes
+- All 5 new fields are optional — no blocking effect on form submit
+- No new steps added — all within existing 3-step structure
+- Step 3 now has 3 rows of dropdowns before the required contact method
+- Estimated form completion time: ~90–120 seconds (under the 2-minute target)
+- All labels fully bilingual via `lang === "en"` ternary on `<option>` elements
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `src/pages/Home.tsx` | `formData` state (+5 fields, renamed `hsaPlanning`→`paymentPlanning`), `resetForm` updated, Formspree payload updated, WhatsApp message updated, Step 2 `previousMedicalEvaluation` dropdown inserted, Step 3 layout rebuilt with 4 new fields |
+
+### Build
+✅ 0 errors · 0 lints · built in 18.32s
+

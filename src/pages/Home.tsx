@@ -154,9 +154,13 @@ export default function Home({ lang }: HomeProps) {
     texasLocation: "",
     procedure: "",
     medicalFiles: [] as string[],
+    previousMedicalEvaluation: "",
     clinicalNotes: "",
+    passportStatus: "",
     timeframe: "",
-    hsaPlanning: "",
+    decisionStage: "",
+    travelWillingness: "",
+    paymentPlanning: "",
     contactMethod: "",
     termsAccepted: false,
     medicalDisclaimer: false
@@ -225,11 +229,15 @@ export default function Home({ lang }: HomeProps) {
           email: formData.email,
           location: formData.texasLocation,
           procedure: procNames[formData.procedure] || formData.procedure,
-          timeline: formData.timeframe,
-          contact_method: formData.contactMethod,
-          hsa_planning: formData.hsaPlanning,
-          medical_files: formData.medicalFiles.join(", ") || "—",
+          previous_medical_evaluation: formData.previousMedicalEvaluation || "—",
           notes: formData.clinicalNotes || "—",
+          medical_files: formData.medicalFiles.join(", ") || "—",
+          passport_status: formData.passportStatus || "—",
+          timeline: formData.timeframe,
+          decision_stage: formData.decisionStage || "—",
+          travel_willingness: formData.travelWillingness || "—",
+          payment_planning: formData.paymentPlanning || "—",
+          contact_method: formData.contactMethod,
           referral_id: referralId || "direct",
         }),
       });
@@ -243,11 +251,16 @@ export default function Home({ lang }: HomeProps) {
       `*Name:* ${formData.fullName}\n` +
       `*Phone:* ${formData.phone}\n` +
       `*Email:* ${formData.email}\n` +
-      `*Location:* ${formData.texasLocation}\n` +
+      `*Location:* ${formData.texasLocation}\n\n` +
       `*Procedure:* ${procNames[formData.procedure] || formData.procedure || "—"}\n` +
+      `*Prior Physician Evaluation:* ${formData.previousMedicalEvaluation || "—"}\n` +
+      `*Notes:* ${formData.clinicalNotes || "—"}\n\n` +
+      `*Passport:* ${formData.passportStatus || "—"}\n` +
       `*Timeline:* ${formData.timeframe || "—"}\n` +
-      `*Contact via:* ${formData.contactMethod}\n` +
-      `*Notes:* ${formData.clinicalNotes || "—"}` +
+      `*Decision Stage:* ${formData.decisionStage || "—"}\n` +
+      `*Travel Willingness:* ${formData.travelWillingness || "—"}\n` +
+      `*Payment Planning:* ${formData.paymentPlanning || "—"}\n` +
+      `*Contact via:* ${formData.contactMethod}` +
       (referralId ? `\n*Referral:* ${referralId}` : "");
 
     window.open(
@@ -267,9 +280,13 @@ export default function Home({ lang }: HomeProps) {
       texasLocation: "",
       procedure: "",
       medicalFiles: [],
+      previousMedicalEvaluation: "",
       clinicalNotes: "",
+      passportStatus: "",
       timeframe: "",
-      hsaPlanning: "",
+      decisionStage: "",
+      travelWillingness: "",
+      paymentPlanning: "",
       contactMethod: "",
       termsAccepted: false,
       medicalDisclaimer: false
@@ -1407,6 +1424,25 @@ export default function Home({ lang }: HomeProps) {
 
                       <div>
                         <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                          <span className="lang-en">Have you previously been evaluated by a physician for this condition?</span>
+                          <span className="lang-es font-sans">¿Ha sido evaluado previamente por un médico para esta condición?</span>
+                        </label>
+                        <select
+                          name="previousMedicalEvaluation"
+                          value={formData.previousMedicalEvaluation}
+                          onChange={handleInputChange}
+                          className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
+                        >
+                          <option value="">
+                            {lang === "en" ? "Select an option..." : "Selecciona una opción..."}
+                          </option>
+                          <option value="Yes">{lang === "en" ? "Yes" : "Sí"}</option>
+                          <option value="No">{lang === "en" ? "No" : "No"}</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                           <span className="lang-en">Clinical Symptoms or Preexisting Pathologies</span>
                           <span className="lang-es font-sans">Síntomas Actuales o Alergias Clínicas</span>
                         </label>
@@ -1450,10 +1486,31 @@ export default function Home({ lang }: HomeProps) {
                       exit={{ opacity: 0, x: -10 }}
                       className="space-y-4"
                     >
+                      {/* Row 1: Passport + Timeline */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
+                          <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 font-sans">
+                            <span className="lang-en">Do you currently have a valid passport?</span>
+                            <span className="lang-es font-sans">¿Cuenta actualmente con pasaporte vigente?</span>
+                          </label>
+                          <select
+                            name="passportStatus"
+                            value={formData.passportStatus}
+                            onChange={handleInputChange}
+                            className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
+                          >
+                            <option value="">
+                              {lang === "en" ? "Select an option..." : "Selecciona una opción..."}
+                            </option>
+                            <option value="Yes">{lang === "en" ? "Yes" : "Sí"}</option>
+                            <option value="Currently Renewing">{lang === "en" ? "Currently Renewing" : "En Renovación"}</option>
+                            <option value="No">{lang === "en" ? "No" : "No"}</option>
+                          </select>
+                        </div>
+
+                        <div>
                           <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5">
-                            <span className="lang-en">Medical Timeline urgency</span>
+                            <span className="lang-en">Medical Timeline Urgency</span>
                             <span className="lang-es font-sans font-bold text-[11px]">Plazo para el Procedimiento</span>
                           </label>
                           <select 
@@ -1462,32 +1519,80 @@ export default function Home({ lang }: HomeProps) {
                             onChange={handleInputChange}
                             className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer"
                           >
-                            <option value="">Select urgency timeline...</option>
-                            <option value="immediate">Immediate Priority (Next 48 hrs - 15 days)</option>
-                            <option value="30days">Within 30 Days</option>
-                            <option value="90days">Standard Planning (Within 3 months)</option>
-                            <option value="exploring">Just researching and comparing</option>
+                            <option value="">
+                              {lang === "en" ? "Select urgency timeline..." : "Selecciona un plazo..."}
+                            </option>
+                            <option value="immediate">{lang === "en" ? "Immediate Priority (Next 48 hrs – 15 days)" : "Prioridad Inmediata (48 hrs – 15 días)"}</option>
+                            <option value="30days">{lang === "en" ? "Within 30 Days" : "En los próximos 30 días"}</option>
+                            <option value="90days">{lang === "en" ? "Standard Planning (Within 3 months)" : "Planificación Estándar (En 3 meses)"}</option>
+                            <option value="exploring">{lang === "en" ? "Just researching and comparing" : "Solo investigando y comparando"}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Row 2: Decision Stage + Travel Willingness */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 font-sans">
+                            <span className="lang-en">How would you describe your current decision stage?</span>
+                            <span className="lang-es font-sans">¿Cómo describiría su etapa actual de decisión?</span>
+                          </label>
+                          <select
+                            name="decisionStage"
+                            value={formData.decisionStage}
+                            onChange={handleInputChange}
+                            className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
+                          >
+                            <option value="">
+                              {lang === "en" ? "Select an option..." : "Selecciona una opción..."}
+                            </option>
+                            <option value="Ready to Move Forward">{lang === "en" ? "Ready to Move Forward" : "Listo para Avanzar"}</option>
+                            <option value="Comparing Options">{lang === "en" ? "Comparing Options" : "Comparando Opciones"}</option>
+                            <option value="Gathering Information Only">{lang === "en" ? "Gathering Information Only" : "Solo Buscando Información"}</option>
                           </select>
                         </div>
 
                         <div>
                           <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 font-sans">
-                            <span className="lang-en">Insurance / HSA Planning Status</span>
-                            <span className="lang-es font-sans">Estatus Financiero o Uso de HSA</span>
+                            <span className="lang-en">If medically approved, would you travel to Monterrey?</span>
+                            <span className="lang-es font-sans">Si es aprobado, ¿viajaría a Monterrey para su tratamiento?</span>
                           </label>
-                          <select 
-                            name="hsaPlanning" 
-                            value={formData.hsaPlanning}
+                          <select
+                            name="travelWillingness"
+                            value={formData.travelWillingness}
                             onChange={handleInputChange}
                             className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
                           >
-                            <option value="">Select funding type status...</option>
-                            <option value="hsa">Planning to cover via HSA/FSA Funds</option>
-                            <option value="out_pocket">Self-Pay Out-of-pocket savings</option>
-                            <option value="seeking_reimburse">Seeking insurer reimbursement letter</option>
-                            <option value="unsure">Need financial advisory guidance</option>
+                            <option value="">
+                              {lang === "en" ? "Select an option..." : "Selecciona una opción..."}
+                            </option>
+                            <option value="Yes">{lang === "en" ? "Yes" : "Sí"}</option>
+                            <option value="Maybe">{lang === "en" ? "Maybe" : "Tal Vez"}</option>
+                            <option value="Not Sure Yet">{lang === "en" ? "Not Sure Yet" : "Aún No Estoy Seguro"}</option>
                           </select>
                         </div>
+                      </div>
+
+                      {/* Row 3: Payment Planning (full width) */}
+                      <div>
+                        <label className="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 font-sans">
+                          <span className="lang-en">How do you anticipate covering treatment expenses?</span>
+                          <span className="lang-es font-sans">¿Cómo anticipa cubrir los gastos del procedimiento?</span>
+                        </label>
+                        <select
+                          name="paymentPlanning"
+                          value={formData.paymentPlanning}
+                          onChange={handleInputChange}
+                          className="w-full bg-[#0F172A]/70 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#22B8CF] transition-colors rounded-none cursor-pointer font-sans"
+                        >
+                          <option value="">
+                            {lang === "en" ? "Select an option..." : "Selecciona una opción..."}
+                          </option>
+                          <option value="Personal Funds">{lang === "en" ? "Personal Funds" : "Recursos Propios"}</option>
+                          <option value="HSA / FSA">{lang === "en" ? "HSA / FSA" : "Fondos HSA / FSA"}</option>
+                          <option value="Insurance Reimbursement">{lang === "en" ? "Insurance Reimbursement" : "Reembolso de Seguro"}</option>
+                          <option value="Still Evaluating Options">{lang === "en" ? "Still Evaluating Options" : "Aún Evaluando Opciones"}</option>
+                        </select>
                       </div>
 
                       <div>
