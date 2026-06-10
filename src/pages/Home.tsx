@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { proceduresData } from "../data/procedures";
+import { supabase } from "../lib/supabaseClient";
 import { 
   Building2, 
   Plane, 
@@ -218,31 +219,41 @@ export default function Home({ lang }: HomeProps) {
       Laparoscopic_Hysterectomy: "Laparoscopic Hysterectomy",
     };
 
-    // 1. Email via Formspree — replace YOUR_FORMSPREE_ID with your form ID from formspree.io
+    // 1. Calculate lead score before insert
+    let leadScore = 0;
+    if (formData.decisionStage === "Ready to Move Forward") leadScore += 3;
+    if (formData.passportStatus === "Yes") leadScore += 2;
+    if (formData.travelWillingness === "Yes") leadScore += 2;
+    if (formData.previousMedicalEvaluation === "Yes") leadScore += 1;
+    const hasClinicalRecords = formData.medicalFiles.some((f) =>
+      ["diagnosis", "imaging", "labs"].includes(f)
+    );
+    if (hasClinicalRecords) leadScore += 1;
+    if (formData.timeframe === "immediate" || formData.timeframe === "30days") leadScore += 2;
+
+    // 2. Insert into Supabase patient_inquiries
     try {
-      await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          phone: formData.phone,
-          email: formData.email,
-          location: formData.texasLocation,
-          procedure: procNames[formData.procedure] || formData.procedure,
-          previous_medical_evaluation: formData.previousMedicalEvaluation || "—",
-          notes: formData.clinicalNotes || "—",
-          medical_files: formData.medicalFiles.join(", ") || "—",
-          passport_status: formData.passportStatus || "—",
-          timeline: formData.timeframe,
-          decision_stage: formData.decisionStage || "—",
-          travel_willingness: formData.travelWillingness || "—",
-          payment_planning: formData.paymentPlanning || "—",
-          contact_method: formData.contactMethod,
-          referral_id: referralId || "direct",
-        }),
+      const { error } = await supabase.from("patient_inquiries").insert({
+        full_name: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        texas_location: formData.texasLocation,
+        procedure: procNames[formData.procedure] || formData.procedure,
+        medical_files: formData.medicalFiles.join(", ") || null,
+        previous_medical_evaluation: formData.previousMedicalEvaluation || null,
+        clinical_notes: formData.clinicalNotes || null,
+        passport_status: formData.passportStatus || null,
+        timeframe: formData.timeframe || null,
+        decision_stage: formData.decisionStage || null,
+        travel_willingness: formData.travelWillingness || null,
+        payment_planning: formData.paymentPlanning || null,
+        contact_method: formData.contactMethod,
+        referral_id: referralId || "direct",
+        lead_score: leadScore,
       });
-    } catch {
-      // WhatsApp is the live primary channel — continue even if email fails
+      if (error) console.error("[Supabase] patient_inquiries insert error:", error.message);
+    } catch (err) {
+      console.error("[Supabase] patient_inquiries unexpected error:", err);
     }
 
     // 2. Open WhatsApp with pre-filled patient summary (sent from patient's device to MTY Medical)

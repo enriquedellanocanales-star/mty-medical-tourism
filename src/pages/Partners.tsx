@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 import {
   Check,
   ChevronDown,
@@ -151,25 +152,21 @@ export default function Partners({ lang }: PartnersProps) {
     setPartnerCode(code);
     setReferralLink(link);
 
-    // Email via Formspree — replace YOUR_PARTNER_FORMSPREE_ID
+    // Insert into Supabase partners table
     try {
-      await fetch("https://formspree.io/f/YOUR_PARTNER_FORMSPREE_ID", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          profession: formData.profession,
-          city_state: formData.cityState,
-          network_description: formData.networkDescription,
-          partner_code: code,
-          referral_link: link,
-          source: "partner-application",
-        }),
+      const { error } = await supabase.from("partners").insert({
+        partner_code: code,
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        profession: formData.profession,
+        city_state: formData.cityState,
+        network_description: formData.networkDescription || null,
+        terms_accepted_at: new Date().toISOString(),
       });
-    } catch {
-      // Continue to WhatsApp even if email fails
+      if (error) console.error("[Supabase] partners insert error:", error.message);
+    } catch (err) {
+      console.error("[Supabase] partners unexpected error:", err);
     }
 
     // WhatsApp admin notification — includes partner code for record

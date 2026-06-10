@@ -3062,3 +3062,116 @@ Note: `hsaPlanning` / `hsa_planning` column should be renamed to `payment_planni
 ### Build
 ✅ 0 errors · 0 lints · built in 18.32s
 
+---
+
+## Supabase Implementation Phase
+**Date**: June 9, 2026
+**Scope**: Database integration for patient inquiries and partner registrations. No UI, routing, branding, or validation changes.
+
+### Package Installed
+```
+@supabase/supabase-js  (added 8 packages)
+```
+
+### Files Created
+| File | Purpose |
+|------|---------|
+| `src/lib/supabaseClient.ts` | Singleton Supabase client initialized from `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` env vars |
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `src/pages/Home.tsx` | Added Supabase import. Replaced Formspree block with lead score calculation + `supabase.from("patient_inquiries").insert(...)` |
+| `src/pages/Partners.tsx` | Added Supabase import. Replaced Formspree block with `supabase.from("partners").insert(...)` |
+
+### supabaseClient.ts
+```ts
+import { createClient } from "@supabase/supabase-js";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+```
+
+### Patient Inquiries — DB Insert
+
+**Table**: `patient_inquiries`
+
+**Columns inserted**:
+| JS Field | DB Column | Notes |
+|---|---|---|
+| `formData.fullName` | `full_name` | required |
+| `formData.phone` | `phone` | required |
+| `formData.email` | `email` | required |
+| `formData.texasLocation` | `texas_location` | required |
+| `procNames[formData.procedure]` | `procedure` | resolved display name |
+| `formData.medicalFiles.join(", ")` | `medical_files` | comma-separated, nullable |
+| `formData.previousMedicalEvaluation` | `previous_medical_evaluation` | nullable |
+| `formData.clinicalNotes` | `clinical_notes` | nullable |
+| `formData.passportStatus` | `passport_status` | nullable |
+| `formData.timeframe` | `timeframe` | nullable |
+| `formData.decisionStage` | `decision_stage` | nullable |
+| `formData.travelWillingness` | `travel_willingness` | nullable |
+| `formData.paymentPlanning` | `payment_planning` | nullable |
+| `formData.contactMethod` | `contact_method` | required |
+| `referralId \|\| "direct"` | `referral_id` | exact value, no transform |
+| `leadScore` (calculated) | `lead_score` | integer |
+
+### Lead Score Calculation
+
+Calculated client-side before insert. Stored in `lead_score` column.
+
+| Condition | Points |
+|-----------|--------|
+| `decisionStage === "Ready to Move Forward"` | +3 |
+| `passportStatus === "Yes"` | +2 |
+| `travelWillingness === "Yes"` | +2 |
+| `previousMedicalEvaluation === "Yes"` | +1 |
+| `medicalFiles` contains `diagnosis`, `imaging`, or `labs` | +1 |
+| `timeframe === "immediate"` OR `timeframe === "30days"` | +2 |
+| **Maximum possible score** | **11** |
+
+```ts
+let leadScore = 0;
+if (formData.decisionStage === "Ready to Move Forward") leadScore += 3;
+if (formData.passportStatus === "Yes") leadScore += 2;
+if (formData.travelWillingness === "Yes") leadScore += 2;
+if (formData.previousMedicalEvaluation === "Yes") leadScore += 1;
+const hasClinicalRecords = formData.medicalFiles.some((f) =>
+  ["diagnosis", "imaging", "labs"].includes(f)
+);
+if (hasClinicalRecords) leadScore += 1;
+if (formData.timeframe === "immediate" || formData.timeframe === "30days") leadScore += 2;
+```
+
+### Partner Registration — DB Insert
+
+**Table**: `partners`
+
+**Columns inserted**:
+| JS Field | DB Column | Notes |
+|---|---|---|
+| `code` (generated) | `partner_code` | MTY-XXXX, e.g. MTY-1048 |
+| `formData.fullName` | `full_name` | required |
+| `formData.email` | `email` | required |
+| `formData.phone` | `phone` | required |
+| `formData.profession` | `profession` | required |
+| `formData.cityState` | `city_state` | required |
+| `formData.networkDescription` | `network_description` | nullable |
+| `new Date().toISOString()` | `terms_accepted_at` | timestamptz, set at submission |
+
+### Error Handling Strategy
+
+Both inserts use a non-blocking `try/catch`:
+- On Supabase error → `console.error("[Supabase] ... error:", error.message)`
+- On unexpected exception → `console.error("[Supabase] ... unexpected error:", err)`
+- WhatsApp `window.open()` always executes regardless of DB result
+- Success screen always shown regardless of DB result
+- User experience is never impacted by database failures
+
+### Referral ID Compatibility
+
+`referral_id` is stored exactly as received from `sessionStorage("mty_ref")`. If no referral, stored as `"direct"`. No transformation, no lowercase — exact match to `partner_code` format (MTY-XXXX) for future JOIN queries.
+
+### Build
+✅ 0 errors · 0 lints · built in 13.37s (2134 modules, includes @supabase/supabase-js)
+
