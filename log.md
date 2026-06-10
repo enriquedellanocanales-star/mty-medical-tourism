@@ -3285,11 +3285,88 @@ All 6 procedure pages previously contained placeholder facility references (gene
 ### Pending Before Production
 ```
 □ Place 6 hero images in /public/assets/images/procedures/
-□ Physician confirmation of recovery nights for each procedure
 □ Hospital ION certification body and accreditation number
 □ Antaris Fundidora amenities confirmed for post-procedure patients
 □ Verify cost comparison claims or remove permanently
 □ Confirm dental clinic (is Smile Makeover at Hospital ION or separate facility?)
+□ Confirm departure clearance dates per procedure
+```
+
+---
+
+## Package Definitions + Cancellation Policy Implementation
+**Date**: June 10, 2026
+**Scope**: `src/data/procedures.ts`, `src/pages/ProcedureDetail.tsx`, `src/pages/PatientPolicies.tsx`, `src/App.tsx`, `docs/package-definitions.md`
+
+### Business Decisions Applied (FINAL)
+
+#### Package Recovery Nights — Approved Definitions
+| Procedure | Hospital ION | Antaris Fundidora | Total |
+|---|---|---|---|
+| Advanced LASIK | 0 | 2 nights | 2 |
+| Laparoscopic Gallbladder | 0 (hospital night covered under fees) | 3 nights | 3 |
+| Nissen Anti-Reflux | 1 night | 4 nights | 5 |
+| Laparoscopic Hysterectomy | 1 night | 6 nights | 7 |
+| Rhinoplasty | 0 | 7 nights | 7 |
+| Premium Smile Makeover | 0 | 4 nights | 4 |
+
+#### Package Inclusions (all procedures)
+Procedure · Physician Fees · Hospital Fees (when applicable) · Transportation Coordination · Antaris Fundidora Accommodation · Scheduled Follow-Up Visits · Bilingual Patient Coordination
+
+#### Package Exclusions (all procedures)
+Airfare · Companion Expenses · Personal Purchases · Additional Recovery Nights · Additional Medical Services Not Originally Planned · Additional Testing Not Originally Required
+
+### Files Created
+| File | Purpose |
+|---|---|
+| `docs/package-definitions.md` | Official source of truth for all package inclusions, recovery nights, pricing, cancellation schedule |
+| `src/pages/PatientPolicies.tsx` | Full patient policies page at `/patient-policies` |
+
+### Changes to `src/data/procedures.ts`
+- Added `PackageNights` interface (`hospitalNights`, `hotelNights`, `totalNights`)
+- Added `packageNights` field to `ProcedureData` interface
+- Each procedure now carries exact approved nights (e.g., LASIK: 2 hotel, Reflux: 1 hospital + 4 hotel)
+- All `recoveryOverview` texts updated to state exact nights ("Your package includes X nights at Antaris Fundidora")
+- All `whatsCoordinated[4]` updated to state exact nights (e.g., "3 recovery nights at Antaris Fundidora")
+- Reflux FAQ[1] updated: "1 night at Hospital ION and 4 recovery nights at Antaris Fundidora — 5 total nights"
+- Hysterectomy FAQ[2] updated: "7 total nights — 1 at Hospital ION and 6 recovery nights at Antaris Fundidora"
+- Rhinoplasty FAQ[1] updated: "7-night package designed to cover this full recovery period"
+- No ranges, no TBD, no estimates on any public-facing field
+
+### Changes to `src/pages/ProcedureDetail.tsx`
+- **Corridor Travel Assets panel**: Hotel nights line now dynamically renders `procedure.packageNights.hotelNights` — e.g., "2 recovery nights included"
+- **Package Includes column**: Hotel line now shows exact nights — "Antaris Fundidora — X nights"; Hospital ION line conditionally rendered only when `hospitalNights > 0`; nights summary badge added at bottom of includes column
+- **Package Excludes column**: Updated to match final approved list (added "Additional Testing Not Originally Required")
+- **Recovery disclaimer**: Updated to exact approved policy wording: "Additional recovery nights may be required if the treating physician determines that additional monitoring or recovery time is medically necessary. Additional lodging, transportation, and related services are not included in the original package price and will be billed separately."
+
+### New Page: `/patient-policies`
+- Route: `/patient-policies` added to App.tsx
+- 7 policy sections rendered as interactive accordion (open/close):
+  1. Cancellation Policy (with pricing table: 24h grace, >30 days, <30 days, no-show)
+  2. Refund & Payment Policy (30%/70% schedule, 7-day balance deadline)
+  3. Medical Eligibility Policy
+  4. Travel Disruption Policy
+  5. Extended Recovery Policy (includes exact approved wording)
+  6. No Show Policy
+  7. Package Scope Policy (full includes/excludes list)
+- Patient Acceptance section at bottom with 5-item acknowledgement checklist
+- Bilingual (EN/ES) throughout
+- Same visual language: dark hero, serif headings, turquoise accents, amber warnings, motion/react animations
+
+### App.tsx Changes
+- Import: `PatientPolicies` added
+- Route: `<Route path="/patient-policies" element={<PatientPolicies lang={lang} />} />`
+- Footer: "Privacy Policy" placeholder link replaced with functional `<Link to="/patient-policies">Patient Policies</Link>`
+
+### Build
+✅ 0 errors · 0 lints · 2135 modules · built in 8.59s
+
+### Remaining TODO items (not blocking publish)
+```
+□ Place 6 hero images in /public/assets/images/procedures/
+□ Confirm Hospital ION certification body and accreditation number
+□ Verify cost comparison claims (Gallbladder, Rhinoplasty)
+□ Confirm dental facility for Smile Makeover
 □ Confirm departure clearance dates per procedure
 ```
 

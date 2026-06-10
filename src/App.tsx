@@ -40,6 +40,7 @@ import Home from "./pages/Home";
 import ProcedureDetail from "./pages/ProcedureDetail";
 import Partners from "./pages/Partners";
 import PartnerTerms from "./pages/PartnerTerms";
+import PatientPolicies from "./pages/PatientPolicies";
 
 function AppContent() {
   // Navigation & Language state
@@ -227,6 +228,9 @@ function AppContent() {
           <Route path="/partners" element={<Partners lang={lang} />} />
           <Route path="/partners/terms" element={<PartnerTerms lang={lang} />} />
 
+          {/* Patient Policies */}
+          <Route path="/patient-policies" element={<PatientPolicies lang={lang} />} />
+
           {/* Graceful fallback redirects */}
           <Route path="*" element={<Home lang={lang} />} />
         </Routes>
@@ -370,10 +374,10 @@ function AppContent() {
                   <a href="#faq" onClick={(e) => handleNavClick(e, "faq")} className="hover:text-white transition-colors">FAQ</a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    <span className="lang-en">Privacy Policy</span>
-                    <span className="lang-es font-sans">Política de Privacidad</span>
-                  </a>
+                  <Link to="/patient-policies" className="hover:text-white transition-colors">
+                    <span className="lang-en">Patient Policies</span>
+                    <span className="lang-es font-sans">Políticas del Paciente</span>
+                  </Link>
                 </li>
                 <li className="pt-1 border-t border-white/5 mt-1">
                   <Link to="/partners" className="hover:text-white transition-colors text-white/25">

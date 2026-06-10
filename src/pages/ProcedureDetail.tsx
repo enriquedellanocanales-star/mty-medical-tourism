@@ -267,7 +267,9 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                       {lang === "en" ? "Antaris Fundidora" : "Antaris Fundidora"}
                     </strong>
                     <span className="text-slate-500">
-                      {lang === "en" ? "Recovery hotel, Monterrey" : "Hotel de recuperación, Monterrey"}
+                      {lang === "en"
+                        ? `${procedure.packageNights.hotelNights} recovery night${procedure.packageNights.hotelNights !== 1 ? "s" : ""} included`
+                        : `${procedure.packageNights.hotelNights} noche${procedure.packageNights.hotelNights !== 1 ? "s" : ""} de recuperación incluida${procedure.packageNights.hotelNights !== 1 ? "s" : ""}`}
                     </span>
                   </div>
                 </div>
@@ -314,13 +316,17 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
               </h3>
               <ul className="space-y-3 text-xs text-slate-300 font-sans">
                 {[
-                  lang === "en" ? "Surgical procedure" : "Procedimiento quirúrgico",
-                  lang === "en" ? "Physician fees" : "Honorarios médicos",
-                  lang === "en" ? "Hospital ION facility fees" : "Honorarios de Hospital ION",
-                  lang === "en" ? "Transportation coordination in Monterrey" : "Coordinación de transporte en Monterrey",
-                  lang === "en" ? "Hotel accommodation at Antaris Fundidora" : "Hospedaje en Antaris Fundidora",
-                  lang === "en" ? "Post-operative follow-up" : "Seguimiento postoperatorio",
-                  lang === "en" ? "Bilingual medical tourism coordination" : "Coordinación bilingüe de turismo médico",
+                  lang === "en" ? "Procedure" : "Procedimiento",
+                  lang === "en" ? "Physician Fees" : "Honorarios médicos",
+                  ...(procedure.packageNights.hospitalNights > 0
+                    ? [lang === "en" ? "Hospital ION Facility Fees" : "Honorarios de Hospital ION"]
+                    : []),
+                  lang === "en" ? "Transportation Coordination" : "Coordinación de Transporte",
+                  lang === "en"
+                    ? `Antaris Fundidora — ${procedure.packageNights.hotelNights} night${procedure.packageNights.hotelNights !== 1 ? "s" : ""}`
+                    : `Antaris Fundidora — ${procedure.packageNights.hotelNights} noche${procedure.packageNights.hotelNights !== 1 ? "s" : ""}`,
+                  lang === "en" ? "Scheduled Follow-Up Visits" : "Visitas de Seguimiento Programadas",
+                  lang === "en" ? "Bilingual Patient Coordination" : "Coordinación Bilingüe del Paciente",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <Check size={13} className="text-[#22B8CF] mt-0.5 shrink-0" />
@@ -328,6 +334,16 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                   </li>
                 ))}
               </ul>
+              {/* Nights summary badge */}
+              <div className="mt-5 pt-4 border-t border-white/10 text-[10px] text-[#22B8CF] font-bold uppercase tracking-widest">
+                {procedure.packageNights.hospitalNights > 0
+                  ? (lang === "en"
+                      ? `${procedure.packageNights.hospitalNights} hospital night + ${procedure.packageNights.hotelNights} hotel nights = ${procedure.packageNights.totalNights} total`
+                      : `${procedure.packageNights.hospitalNights} noche hospital + ${procedure.packageNights.hotelNights} noches hotel = ${procedure.packageNights.totalNights} total`)
+                  : (lang === "en"
+                      ? `${procedure.packageNights.hotelNights} recovery night${procedure.packageNights.hotelNights !== 1 ? "s" : ""} at Antaris Fundidora`
+                      : `${procedure.packageNights.hotelNights} noche${procedure.packageNights.hotelNights !== 1 ? "s" : ""} de recuperación en Antaris Fundidora`)}
+              </div>
             </div>
 
             {/* DOES NOT INCLUDE */}
@@ -337,11 +353,12 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
               </h3>
               <ul className="space-y-3 text-xs text-slate-400 font-sans">
                 {[
-                  lang === "en" ? "Airfare — patient arranges own travel" : "Vuelos — el paciente organiza su propio viaje",
-                  lang === "en" ? "Companion travel expenses" : "Gastos de acompañante",
-                  lang === "en" ? "Personal purchases" : "Compras personales",
-                  lang === "en" ? "Additional nights beyond the included package" : "Noches adicionales fuera del paquete incluido",
-                  lang === "en" ? "Additional services not originally planned" : "Servicios adicionales no contemplados originalmente",
+                  lang === "en" ? "Airfare" : "Vuelos",
+                  lang === "en" ? "Companion Expenses" : "Gastos de Acompañante",
+                  lang === "en" ? "Personal Purchases" : "Compras Personales",
+                  lang === "en" ? "Additional Recovery Nights" : "Noches de Recuperación Adicionales",
+                  lang === "en" ? "Additional Medical Services Not Originally Planned" : "Servicios Médicos Adicionales No Contemplados",
+                  lang === "en" ? "Additional Testing Not Originally Required" : "Estudios Adicionales No Requeridos Originalmente",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="text-slate-500 mt-0.5 shrink-0 text-[11px] font-bold">—</span>
@@ -386,8 +403,8 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
 
               <div className="mt-6 p-4 bg-amber-50 border border-amber-200/60 text-[10px] text-amber-800 font-sans leading-relaxed normal-case">
                 {lang === "en"
-                  ? "Additional recovery nights may be added if medically necessary. Extra nights are not included in the package price and will be billed separately."
-                  : "Noches de recuperación adicionales podrán agregarse si son médicamente necesarias. Las noches adicionales no están incluidas en el precio del paquete y serán cobradas por separado."}
+                  ? "Additional recovery nights may be required if the treating physician determines that additional monitoring or recovery time is medically necessary. Additional lodging, transportation, and related services are not included in the original package price and will be billed separately."
+                  : "Noches de recuperación adicionales podrán ser requeridas si el médico tratante determina que el monitoreo o el tiempo de recuperación adicional es médicamente necesario. El alojamiento, transporte y servicios relacionados adicionales no están incluidos en el precio original del paquete y serán facturados por separado."}
               </div>
             </div>
           </div>
