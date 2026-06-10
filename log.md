@@ -3217,3 +3217,79 @@ The prior copy framed the program as exclusively for professionals (insurance ag
 ### Build
 ✅ 0 errors · 0 lints · built in 9.28s
 
+---
+
+## Procedure Page Content Corrections — Phase 1
+**Date**: June 10, 2026
+**Scope**: `src/data/procedures.ts`, `src/pages/ProcedureDetail.tsx`
+**Trigger**: Operational data confirmed — Hospital ION and Antaris Fundidora.
+
+### Business Rationale
+All 6 procedure pages previously contained placeholder facility references (generic "San Pedro Garza García" neighborhood, unnamed "partner corporate suites," unverified recovery ranges). This phase replaces all placeholder content with the confirmed operational model and removes all unverified range claims from public-facing copy.
+
+### Confirmed Operational Data Applied
+| Element | Confirmed Value |
+|---|---|
+| Hospital | Hospital ION |
+| Recovery Hotel | Antaris Fundidora |
+| Ground Transport | MTY Medical Tourism coordinated transportation |
+| Bilingual Coordination | Included in all packages |
+
+### Changes to `src/data/procedures.ts`
+
+**All 6 procedures:**
+- Removed every reference to "San Pedro Garza García" from `executiveCoordination` (EN + ES)
+- Removed every reference to "partner corporate suites," "boutique hotel," "luxury hotel," "corporate recovery accommodations," and any other placeholder hotel description
+- Replaced all hotel references with: "Antaris Fundidora"
+- Removed all recovery time ranges from `recoveryOverview` (e.g., "1-2 days," "7-14 days," "3-5 days," "2 to 3 weeks")
+- Replaced ranges with: "Recovery duration will be confirmed by the treating physician."
+- Added code-level `// TODO:` comments marking every statement requiring physician confirmation before publishing
+- Updated `whatsCoordinated` items to name Hospital ION where hospital/clinic was referenced generically
+- Updated all `whatsCoordinated[4]` (hotel item) to reference "Antaris Fundidora" explicitly
+- Softened unverified cost comparison claims ("60% less than Texas," "50% of Houston/Dallas fees") to non-quantified statements; TODO markers added
+
+**Reflux (Nissen) — specific:**
+- FAQ answer updated to name: "1 night at Hospital ION" and "3 recovery nights at Antaris Fundidora" (previously unverified range "4 to 5 day trip")
+- `// TODO` added — physician must confirm this is the standard package before publishing
+
+### Changes to `src/pages/ProcedureDetail.tsx`
+
+**Hero images:**
+- Removed all 6 Unsplash stock photo URLs
+- Replaced with local paths: `/assets/images/procedures/hero-[name].jpg`
+- Directory created: `public/assets/images/procedures/`
+- Images must be placed in this folder before deployment (broken image is expected until then)
+
+**Corridor Travel Assets (hardcoded UI block):**
+- Hotel label changed from: "Luxury recovery suite room" → "Antaris Fundidora"
+- Hotel description changed from: "Located inside secure San Pedro municipality" → "Antaris Fundidora, Monterrey"
+
+**New section added — Package Includes / Does Not Include:**
+- Position: Between Executive Coordination (section 3) and Recovery Overview (section 5)
+- Dark background (`bg-[#0F172A]`) — two-column layout on desktop, stacked on mobile
+- Left column (Package Includes): Surgical procedure, Physician fees, Hospital ION fees, Transportation, Antaris Fundidora hotel, Post-op follow-up, Bilingual coordination
+- Right column (Package Does Not Include): Airfare, Companion expenses, Personal purchases, Additional nights, Additional unplanned services
+- Bilingual (EN + ES)
+
+**Recovery disclaimer added:**
+- Position: Below the recovery stats grid in the Recovery Overview section
+- Copy: "Additional recovery nights may be added if medically necessary. Extra nights are not included in the package price and will be billed separately."
+- Styled: amber tint (`bg-amber-50`, `border-amber-200`) to distinguish from primary content
+
+### Documentation Created
+- `docs/procedure-content-corrections.md` — full per-procedure corrections log with issue table, applied corrections table, remaining TODO items per procedure, and consolidated physician confirmation checklist
+
+### Build
+✅ 0 errors · 0 lints · built in 9.48s (2134 modules)
+
+### Pending Before Production
+```
+□ Place 6 hero images in /public/assets/images/procedures/
+□ Physician confirmation of recovery nights for each procedure
+□ Hospital ION certification body and accreditation number
+□ Antaris Fundidora amenities confirmed for post-procedure patients
+□ Verify cost comparison claims or remove permanently
+□ Confirm dental clinic (is Smile Makeover at Hospital ION or separate facility?)
+□ Confirm departure clearance dates per procedure
+```
+

@@ -72,23 +72,24 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  // Safe image generator mapping for high CRO aesthetics
+  // Local hero image paths — place actual images in /public/assets/images/procedures/
+  // File naming convention: hero-[slug-key].jpg
   const getProcedureImageUrl = (key: string) => {
     switch (key) {
       case "Advanced_LASIK":
-        return "https://images.unsplash.com/photo-1579684389782-64d84b5e901a?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-lasik.jpg";
       case "Laparoscopic_Gallbladder":
-        return "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-gallbladder.jpg";
       case "Advanced_Reflux":
-        return "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-reflux.jpg";
       case "Laparoscopic_Hysterectomy":
-        return "https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-hysterectomy.jpg";
       case "Rhinoplasty":
-        return "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-rhinoplasty.jpg";
       case "Smile_Makeover":
-        return "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-smile-makeover.jpg";
       default:
-        return "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80";
+        return "/assets/images/procedures/hero-default.jpg";
     }
   };
 
@@ -263,10 +264,10 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                   <Building2 size={15} className="text-[#22B8CF] mt-0.5 shrink-0" />
                   <div>
                     <strong className="text-[#0F172A] uppercase tracking-wide block text-[10px]">
-                      {lang === "en" ? "Luxury recovery suite room" : "Alojamiento en Suite de Negocios"}
+                      {lang === "en" ? "Antaris Fundidora" : "Antaris Fundidora"}
                     </strong>
                     <span className="text-slate-500">
-                      {lang === "en" ? "Located inside secure San Pedro municipality" : "Dentro del área urbana blindada de San Pedro"}
+                      {lang === "en" ? "Recovery hotel, Monterrey" : "Hotel de recuperación, Monterrey"}
                     </span>
                   </div>
                 </div>
@@ -290,7 +291,71 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
         </div>
       </section>
 
-      {/* 4. RECOVERY OVERVIEW */}
+      {/* 4. PACKAGE INCLUDES / DOES NOT INCLUDE */}
+      <section className="py-16 md:py-20 bg-[#0F172A] text-white border-b border-white/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          <div className="text-center mb-10">
+            <span className="text-[#22B8CF] text-xs font-bold tracking-[0.25em] uppercase block mb-2">
+              {lang === "en" ? "PACKAGE TRANSPARENCY" : "TRANSPARENCIA DEL PAQUETE"}
+            </span>
+            <h2 className="text-xl sm:text-2xl font-serif font-bold uppercase tracking-wider text-white">
+              {lang === "en" ? "What Your Package Covers" : "Qué Incluye Su Paquete"}
+            </h2>
+            <div className="h-0.5 w-12 bg-[#22B8CF] mx-auto mt-3"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/* INCLUDES */}
+            <div className="bg-white/5 border border-white/10 p-6 sm:p-8">
+              <h3 className="font-serif text-sm font-bold uppercase tracking-widest text-[#22B8CF] border-b border-white/10 pb-3 mb-5">
+                {lang === "en" ? "Package Includes" : "El Paquete Incluye"}
+              </h3>
+              <ul className="space-y-3 text-xs text-slate-300 font-sans">
+                {[
+                  lang === "en" ? "Surgical procedure" : "Procedimiento quirúrgico",
+                  lang === "en" ? "Physician fees" : "Honorarios médicos",
+                  lang === "en" ? "Hospital ION facility fees" : "Honorarios de Hospital ION",
+                  lang === "en" ? "Transportation coordination in Monterrey" : "Coordinación de transporte en Monterrey",
+                  lang === "en" ? "Hotel accommodation at Antaris Fundidora" : "Hospedaje en Antaris Fundidora",
+                  lang === "en" ? "Post-operative follow-up" : "Seguimiento postoperatorio",
+                  lang === "en" ? "Bilingual medical tourism coordination" : "Coordinación bilingüe de turismo médico",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <Check size={13} className="text-[#22B8CF] mt-0.5 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* DOES NOT INCLUDE */}
+            <div className="bg-white/5 border border-white/10 p-6 sm:p-8">
+              <h3 className="font-serif text-sm font-bold uppercase tracking-widest text-slate-400 border-b border-white/10 pb-3 mb-5">
+                {lang === "en" ? "Package Does Not Include" : "El Paquete No Incluye"}
+              </h3>
+              <ul className="space-y-3 text-xs text-slate-400 font-sans">
+                {[
+                  lang === "en" ? "Airfare — patient arranges own travel" : "Vuelos — el paciente organiza su propio viaje",
+                  lang === "en" ? "Companion travel expenses" : "Gastos de acompañante",
+                  lang === "en" ? "Personal purchases" : "Compras personales",
+                  lang === "en" ? "Additional nights beyond the included package" : "Noches adicionales fuera del paquete incluido",
+                  lang === "en" ? "Additional services not originally planned" : "Servicios adicionales no contemplados originalmente",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <span className="text-slate-500 mt-0.5 shrink-0 text-[11px] font-bold">—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 5. RECOVERY OVERVIEW */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
@@ -315,15 +380,21 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="text-slate-400 text-[10px] block font-medium">{lang === "en" ? "Physical activity return" : "Retorno Físico"}</span>
-                  <span>{lang === "en" ? "Varies dynamically per case" : "Según indicación del médico"}</span>
+                  <span>{lang === "en" ? "Per physician indication" : "Según indicación del médico"}</span>
                 </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-amber-50 border border-amber-200/60 text-[10px] text-amber-800 font-sans leading-relaxed normal-case">
+                {lang === "en"
+                  ? "Additional recovery nights may be added if medically necessary. Extra nights are not included in the package price and will be billed separately."
+                  : "Noches de recuperación adicionales podrán agregarse si son médicamente necesarias. Las noches adicionales no están incluidas en el precio del paquete y serán cobradas por separado."}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. WHAT'S COORDINATED (Protección Legal con "may include") */}
+      {/* 6. WHAT'S COORDINATED (Protección Legal con "may include") */}
       <section className="py-16 md:py-24 bg-[#FAFAF9] border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -370,7 +441,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
         </div>
       </section>
 
-      {/* 6. FAQ ESPECÍFICO (3 acordeones interactivos) */}
+      {/* 7. FAQ ESPECÍFICO (3 acordeones interactivos) */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -427,7 +498,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
         </div>
       </section>
 
-      {/* 7. STRATEGIC CTA (Botón en #22B8CF que redirige a lead-capture preseleccionando) */}
+      {/* 8. STRATEGIC CTA (Botón en #22B8CF que redirige a lead-capture preseleccionando) */}
       <section className="py-16 md:py-24 bg-[#0F172A] text-white relative overflow-hidden text-center">
         <div className="absolute inset-0 bg-gradient-to-br from-[#164E63]/30 to-[#0F172A] z-0"></div>
         
@@ -455,7 +526,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
         </div>
       </section>
 
-      {/* 8. MANDATORY DISCLAIMER */}
+      {/* 9. MANDATORY DISCLAIMER */}
       <section className="py-8 bg-slate-100 border-t border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-[10px] sm:text-xs text-slate-500 font-sans tracking-wide leading-relaxed">
           <div className="flex items-center justify-center gap-1.5 text-slate-600 mb-2 font-bold uppercase tracking-widest justify-center">
