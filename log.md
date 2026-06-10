@@ -3175,3 +3175,45 @@ Both inserts use a non-blocking `try/catch`:
 ### Build
 ✅ 0 errors · 0 lints · built in 13.37s (2134 modules, includes @supabase/supabase-js)
 
+---
+
+## Partner Page Copy Repositioning — Conversion Update
+**Date**: June 9, 2026
+**Scope**: `src/pages/Partners.tsx` — copy only. No design, layout, compensation, DB, or routing changes.
+
+### Business Rationale
+The prior copy framed the program as exclusively for professionals (insurance agents, realtors, tax preparers). The real model allows **anyone** who knows someone who may need surgery to participate. Perceived professional barriers were suppressing registrations from the largest potential audience: friends, family, community members, and social media users.
+
+### Positioning Change Summary
+
+| Element | Old Positioning | New Positioning |
+|---------|----------------|-----------------|
+| Hero badge | "Professional Referral Program" | "Referral Program" |
+| Hero body | Generic referral description | "Know someone who may need surgery? Connect them... Open to everyone" |
+| Clarification strip | Did not exist | New section: 3 pillars — No Medical Experience / No Sales Experience / No Credentials |
+| Who Can Partner eyebrow | "Target Audiences" | "Open To Everyone" |
+| Who Can Partner intro | "open to professionals and community leaders" | "Anyone may participate. No credentials required." |
+| Audience cards | Insurance Agents, Realtors, Tax Preparers, Community Leaders, Business Owners, Professional Network | Friends & Family, Community Members, Social Media Creators, Insurance Agents, Business Professionals, Anyone With Trusted Connections |
+| FAQ: medical knowledge | "No medical knowledge is required." | Expanded: explicitly states no professional credentials required, open to anyone |
+| Form eyebrow | "Partner Application" | "Open To Everyone" |
+| Form description | "Complete the form, accept T&C..." | "No professional credentials required. Complete the form..." |
+
+### New Section Added
+**"No Experience Required" clarification strip** — placed between Hero and "How It Works":
+- Dark background (`bg-[#0F172A]`) to visually connect with hero
+- 3 columns (stacks on mobile): No Medical Experience / No Sales Experience / No Professional Credentials
+- Each with `<Check />` icon, serif title, micro body copy
+- Purpose: eliminate uncertainty before the visitor scrolls
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `src/pages/Partners.tsx` | Hero copy, new clarification section, audiences array, Who Can Partner intro, FAQ entry expanded, form header |
+
+### Icons Added
+- `Heart` — Friends & Family card
+- `Share2` — Social Media Creators card
+
+### Build
+✅ 0 errors · 0 lints · built in 9.28s
+

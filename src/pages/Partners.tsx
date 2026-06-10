@@ -16,6 +16,8 @@ import {
   Clock,
   Copy,
   Link2,
+  Heart,
+  Share2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -55,10 +57,10 @@ const partnerFaqs = [
     aEs: "No. No hay límite en referidos. Cada referido exitoso que resulte en un paquete de tratamiento completamente pagado y confirmado genera la compensación de $200.",
   },
   {
-    qEn: "Do I need medical knowledge to participate?",
-    aEn: "No medical knowledge is required. Your role is to connect interested individuals with MTY Medical Tourism's coordination team. All clinical matters are handled exclusively by the physicians and healthcare facilities.",
-    qEs: "¿Necesito conocimientos médicos para participar?",
-    aEs: "No se requieren conocimientos médicos. Tu función es conectar a personas interesadas con el equipo de coordinación de MTY Medical Tourism. Todos los asuntos clínicos son manejados exclusivamente por los médicos e instituciones de salud.",
+    qEn: "Do I need medical knowledge or professional credentials to participate?",
+    aEn: "No. The program is open to anyone — friends, family members, community members, social media creators, or professionals. No medical knowledge, sales experience, or professional license is required. Your only role is to connect interested people with our coordination team. All clinical and medical decisions are handled exclusively by licensed physicians and healthcare facilities.",
+    qEs: "¿Necesito conocimientos médicos o credenciales profesionales para participar?",
+    aEs: "No. El programa está abierto a cualquier persona: amigos, familiares, miembros de la comunidad, creadores de contenido o profesionales. No se requieren conocimientos médicos, experiencia en ventas ni licencia profesional. Tu única función es conectar a personas interesadas con nuestro equipo de coordinación. Todas las decisiones clínicas y médicas son responsabilidad exclusiva de los médicos certificados y las instituciones de salud.",
   },
   {
     qEn: "Can I modify or negotiate pricing for referred patients?",
@@ -70,30 +72,34 @@ const partnerFaqs = [
 
 const audiences = [
   {
+    icon: Heart,
+    labelEn: "Friends & Family",
+    labelEs: "Amigos y Familia",
+  },
+  {
+    icon: Users,
+    labelEn: "Community Members",
+    labelEs: "Miembros de la Comunidad",
+  },
+  {
+    icon: Share2,
+    labelEn: "Social Media Creators",
+    labelEs: "Creadores en Redes Sociales",
+  },
+  {
     icon: Briefcase,
     labelEn: "Insurance Agents",
     labelEs: "Agentes de Seguros",
   },
-  { icon: Users, labelEn: "Realtors", labelEs: "Agentes Inmobiliarios" },
-  {
-    icon: FileText,
-    labelEn: "Tax Preparers",
-    labelEs: "Preparadores de Impuestos",
-  },
-  {
-    icon: PhoneCall,
-    labelEn: "Community Leaders",
-    labelEs: "Líderes Comunitarios",
-  },
   {
     icon: Award,
-    labelEn: "Business Owners",
-    labelEs: "Empresarios",
+    labelEn: "Business Professionals",
+    labelEs: "Profesionales de Negocios",
   },
   {
     icon: ShieldCheck,
-    labelEn: "Professional Network Contacts",
-    labelEs: "Contactos de Red Profesional",
+    labelEn: "Anyone With Trusted Connections",
+    labelEs: "Cualquier Persona Con Conexiones de Confianza",
   },
 ];
 
@@ -208,17 +214,22 @@ export default function Partners({ lang }: PartnersProps) {
             <Award size={11} />
             <span>
               {lang === "en"
-                ? "Professional Referral Program"
-                : "Programa Profesional de Referidos"}
+                ? "Referral Program"
+                : "Programa de Referidos"}
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold tracking-wider text-white uppercase leading-tight mb-5">
             {lang === "en" ? "MTY Medical\nPartner Network" : "Red de Socios\nMTY Medical"}
           </h1>
+          <p className="text-base sm:text-lg text-[#22B8CF] font-serif font-semibold max-w-lg mx-auto leading-snug normal-case mb-4 tracking-wide">
+            {lang === "en"
+              ? "Know someone who may need surgery?"
+              : "¿Conoces a alguien que pueda necesitar una cirugía?"}
+          </p>
           <p className="text-sm sm:text-base text-slate-300 font-sans max-w-xl mx-auto leading-relaxed normal-case mb-8">
             {lang === "en"
-              ? "Refer patients to a trusted medical coordination service and earn a fixed compensation per completed procedure. No medical knowledge required."
-              : "Refiere pacientes a un servicio confiable de coordinación médica y recibe una compensación fija por procedimiento completado. No se requieren conocimientos médicos."}
+              ? "Connect them with our coordination team and earn USD $200 when their treatment is completed. Open to everyone — no medical knowledge, no sales experience, and no professional credentials required."
+              : "Conéctalo con nuestro equipo de coordinación y gana USD $200 cuando su tratamiento sea completado. Abierto a todos — no se requieren conocimientos médicos, experiencia en ventas ni credenciales profesionales."}
           </p>
           <a
             href="#apply"
@@ -226,6 +237,46 @@ export default function Partners({ lang }: PartnersProps) {
           >
             {lang === "en" ? "Apply to Join" : "Solicitar Adhesión"}
           </a>
+        </div>
+      </section>
+
+      {/* ── 1b. NO EXPERIENCE REQUIRED — clarification strip ── */}
+      <section className="py-12 md:py-14 bg-[#0F172A] border-b border-white/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+            {[
+              {
+                titleEn: "No Medical Experience",
+                titleEs: "Sin Experiencia Médica",
+                bodyEn: "You are not expected to provide medical advice, discuss treatments, or answer clinical questions.",
+                bodyEs: "No se espera que brindes consejos médicos, discutas tratamientos ni respondas preguntas clínicas.",
+              },
+              {
+                titleEn: "No Sales Experience",
+                titleEs: "Sin Experiencia en Ventas",
+                bodyEn: "There are no sales targets, scripts, or quotas. Simply connect interested people with our team.",
+                bodyEs: "No hay metas de ventas, guiones ni cuotas. Solo conecta a personas interesadas con nuestro equipo.",
+              },
+              {
+                titleEn: "No Professional Credentials",
+                titleEs: "Sin Credenciales Profesionales",
+                bodyEn: "Open to anyone. Friends, family, community members, and professionals are all equally welcome.",
+                bodyEs: "Abierto a todos. Amigos, familia, miembros de la comunidad y profesionales son igualmente bienvenidos.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center gap-2 px-2">
+                <div className="w-8 h-8 bg-[#22B8CF]/10 border border-[#22B8CF]/20 flex items-center justify-center mb-1">
+                  <Check size={14} className="text-[#22B8CF]" />
+                </div>
+                <h3 className="font-serif text-sm font-bold uppercase tracking-wider text-white">
+                  {lang === "en" ? item.titleEn : item.titleEs}
+                </h3>
+                <p className="text-[11px] text-slate-400 font-sans leading-relaxed normal-case max-w-[220px] mx-auto">
+                  {lang === "en" ? item.bodyEn : item.bodyEs}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -296,7 +347,7 @@ export default function Partners({ lang }: PartnersProps) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <span className="text-[#164E63] text-[10px] font-bold tracking-[0.3em] uppercase block mb-3">
-              {lang === "en" ? "Target Audiences" : "Perfiles Ideales"}
+              {lang === "en" ? "Open To Everyone" : "Abierto a Todos"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold uppercase tracking-wider text-[#0F172A]">
               {lang === "en" ? "Who Can Become a Partner?" : "¿Quién Puede Ser Socio?"}
@@ -304,8 +355,8 @@ export default function Partners({ lang }: PartnersProps) {
             <div className="h-px w-12 bg-[#164E63]/30 mx-auto mt-3" />
             <p className="text-xs text-[#64748B] mt-4 font-sans max-w-lg mx-auto normal-case">
               {lang === "en"
-                ? "The program is open to professionals and community leaders who interact with individuals that may benefit from medical coordination services."
-                : "El programa está abierto a profesionales y líderes comunitarios que interactúan con personas que podrían beneficiarse de los servicios de coordinación médica."}
+                ? "Anyone may participate. No professional credentials or medical knowledge required. If you know someone who may benefit from medical treatment in Monterrey, you are eligible to refer them and earn compensation."
+                : "Cualquier persona puede participar. No se requieren credenciales profesionales ni conocimientos médicos. Si conoces a alguien que pueda beneficiarse de un tratamiento médico en Monterrey, eres elegible para referirlo y ganar compensación."}
             </p>
           </div>
 
@@ -634,7 +685,7 @@ export default function Partners({ lang }: PartnersProps) {
             <>
               <div className="text-center mb-12">
                 <span className="text-[#22B8CF] text-[10px] font-bold tracking-[0.3em] uppercase block mb-3">
-                  {lang === "en" ? "Partner Application" : "Solicitud de Socio"}
+                  {lang === "en" ? "Open To Everyone" : "Abierto a Todos"}
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-serif font-bold uppercase tracking-wider text-white">
                   {lang === "en" ? "Apply to Join" : "Solicitar Adhesión"}
@@ -642,8 +693,8 @@ export default function Partners({ lang }: PartnersProps) {
                 <div className="h-px w-12 bg-[#22B8CF]/40 mx-auto mt-3" />
                 <p className="text-xs text-slate-400 mt-4 font-sans normal-case max-w-md mx-auto">
                   {lang === "en"
-                    ? "Complete the form, accept the Terms & Conditions, and your unique partner code and referral link will be generated immediately."
-                    : "Completa el formulario, acepta los Términos y Condiciones, y tu código único de socio y enlace de referido se generarán de inmediato."}
+                    ? "No professional credentials required. Complete the form, accept the Terms & Conditions, and your personal referral link will be generated immediately."
+                    : "No se requieren credenciales profesionales. Completa el formulario, acepta los Términos y Condiciones, y tu enlace personal de referido se generará de inmediato."}
                 </p>
               </div>
 
