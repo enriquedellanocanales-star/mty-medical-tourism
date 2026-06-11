@@ -168,7 +168,7 @@ export default function ProcedureDetail({ lang, slug }: ProcedureDetailProps) {
                   <img 
                     src={getProcedureImageUrl(procedure.procedureKey)} 
                     alt={`MTY Medical Clinical Environment representing ${content.title}`}
-                    className="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center opacity-80 transition-transform duration-700 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent"></div>
